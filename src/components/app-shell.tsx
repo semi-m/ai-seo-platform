@@ -147,16 +147,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Menu className="size-4" />
             Menu
           </button>
-          <Link
-            href="/overview"
-            className="flex items-center gap-2 pl-1 text-sm font-semibold text-blue sm:hidden"
-          >
-            <Compass className="size-4" />
-            Lyra
-          </Link>
-          <div className="hidden min-w-0 flex-1 sm:block">
+          <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold">{workspace.brand}</p>
-            <p className="truncate text-[11px] text-muted-foreground">
+            <p className="hidden truncate text-[11px] text-muted-foreground sm:block">
               {workspace.daily.checkedAt} · {plan.name}
             </p>
           </div>
