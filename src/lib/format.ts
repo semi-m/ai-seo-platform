@@ -3,26 +3,26 @@ import type { Effort, Impact, Tone } from "./types";
 export function toneClass(tone: Tone): string {
   switch (tone) {
     case "good":
-      return "text-emerald-700 bg-emerald-50 border-emerald-200";
+      return "text-ink bg-pear/35 border-pear";
     case "watch":
-      return "text-amber-800 bg-amber-50 border-amber-200";
+      return "text-blue bg-indigo/15 border-indigo/40";
     case "bad":
-      return "text-red-700 bg-red-50 border-red-200";
+      return "text-blue bg-indigo/25 border-indigo";
     default:
-      return "text-stone-600 bg-stone-50 border-stone-200";
+      return "text-muted-foreground bg-muted border-border";
   }
 }
 
 export function impactClass(impact: Impact): string {
   switch (impact) {
     case "very-high":
-      return "bg-red-50 text-red-800 border-red-200";
+      return "bg-indigo/20 text-blue border-indigo/50";
     case "high":
-      return "bg-amber-50 text-amber-900 border-amber-200";
+      return "bg-pear/30 text-ink border-pear/70";
     case "medium":
-      return "bg-stone-100 text-stone-700 border-stone-200";
+      return "bg-blue/10 text-blue border-blue/25";
     default:
-      return "bg-stone-50 text-stone-500 border-stone-200";
+      return "bg-muted text-muted-foreground border-border";
   }
 }
 

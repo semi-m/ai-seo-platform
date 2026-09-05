@@ -33,8 +33,9 @@ export default function OnboardingPage() {
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-4 py-12">
+      <div className="glass rounded-[1.75rem] px-6 py-8 sm:px-8">
       <div className="mb-10 flex items-center gap-2.5">
-        <span className="flex size-8 items-center justify-center rounded-full bg-foreground text-background">
+        <span className="flex size-8 items-center justify-center rounded-full bg-pear text-ink">
           <Compass className="size-3.5" />
         </span>
         <div>
@@ -107,6 +108,7 @@ export default function OnboardingPage() {
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }
