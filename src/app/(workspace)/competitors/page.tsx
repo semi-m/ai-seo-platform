@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWorkspace } from "@/lib/workspace-context";
@@ -13,13 +15,15 @@ const sourceLabel = {
 };
 
 export default function CompetitorsPage() {
-  const { loading, limits, visibleRivals, lockedRivalCount } = useWorkspace();
+  const { loading, limits, visibleRivals, lockedRivalCount, usingDemo } = useWorkspace();
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Loading competitors…</p>;
+    return <PageSkeleton label="Loading competitors…" />;
   }
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
+
       <PageHeader
         eyebrow="Rivals"
         title={limits.rivals === 1 ? "The one rival we watch" : "Who buyers see instead of you"}

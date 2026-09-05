@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { HealthSeverity } from "@/lib/types";
@@ -14,15 +16,17 @@ const severityLabel: Record<HealthSeverity, string> = {
 };
 
 export default function HealthPage() {
-  const { workspace, loading, limits } = useWorkspace();
+  const { workspace, loading, limits, usingDemo } = useWorkspace();
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Loading site health…</p>;
+    return <PageSkeleton label="Loading site health…" />;
   }
 
   const groups: HealthSeverity[] = ["critical", "important", "improvement"];
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
+
       <PageHeader
         eyebrow="Website"
         title="Your pages"

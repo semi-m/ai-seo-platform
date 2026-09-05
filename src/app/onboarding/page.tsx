@@ -32,31 +32,31 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-lg flex-col justify-center px-4 py-12">
-      <div className="mb-8 flex items-center gap-2">
-        <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Compass className="size-4" />
+    <div className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-4 py-12">
+      <div className="mb-10 flex items-center gap-2.5">
+        <span className="flex size-8 items-center justify-center rounded-full bg-foreground text-background">
+          <Compass className="size-3.5" />
         </span>
         <div>
-          <p className="text-sm font-medium">Lyra</p>
-          <p className="text-xs text-muted-foreground">
-            Step {step} of 2 · two minutes
+          <p className="font-heading text-lg tracking-tight">Lyra</p>
+          <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            {step} of 2
           </p>
         </div>
       </div>
 
       {step === 1 ? (
         <>
-          <h1 className="font-heading text-3xl tracking-tight">
-            What business are we looking at?
+          <h1 className="font-heading text-[2rem] leading-tight tracking-tight">
+            Whose site are we watching?
           </h1>
-          <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-            Just the name and site. You start on Look — daily monitoring, no
-            solutions. Connect Google when you want live numbers.
+          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+            Name and URL. You land on Look: keywords you already rank for, one
+            rival, three AI questions. No homework, no solutions.
           </p>
-          <div className="mt-8 space-y-4">
+          <div className="mt-8 space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="brand">Company name</Label>
+              <Label htmlFor="brand">Company</Label>
               <Input
                 id="brand"
                 value={brand}
@@ -74,23 +74,23 @@ export default function OnboardingPage() {
               />
             </div>
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
-            <Button className="w-full" onClick={() => setStep(2)}>
+            <Button className="w-full" size="lg" onClick={() => setStep(2)}>
               Continue
             </Button>
           </div>
         </>
       ) : (
         <>
-          <h1 className="font-heading text-3xl tracking-tight">
+          <h1 className="font-heading text-[2rem] leading-tight tracking-tight">
             What should people find you for?
           </h1>
-          <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-            A few services or products, in normal words. We turn these into Google
-            queries and ChatGPT questions.
+          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+            A few offers, in normal words. We turn them into Google terms and
+            ChatGPT questions.
           </p>
-          <div className="mt-8 space-y-4">
+          <div className="mt-8 space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="products">You sell…</Label>
+              <Label htmlFor="products">You sell</Label>
               <Input
                 id="products"
                 value={products}
@@ -98,8 +98,8 @@ export default function OnboardingPage() {
                 placeholder="AI product development, automation"
               />
             </div>
-            <Button className="w-full" onClick={finish}>
-              Show me today
+            <Button className="w-full" size="lg" onClick={finish}>
+              Open today
             </Button>
             <Button variant="ghost" className="w-full" onClick={() => setStep(1)}>
               Back

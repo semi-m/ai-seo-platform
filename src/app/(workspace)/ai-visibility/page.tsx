@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDelta } from "@/lib/scoring";
@@ -9,17 +11,19 @@ import { pct } from "@/lib/format";
 import { useWorkspace } from "@/lib/workspace-context";
 
 export default function AiVisibilityPage() {
-  const { workspace, loading, limits, visiblePrompts, lockedPromptCount } =
+  const { workspace, loading, limits, visiblePrompts, lockedPromptCount, usingDemo } =
     useWorkspace();
 
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Loading AI visibility…</p>;
+    return <PageSkeleton label="Loading AI visibility…" />;
   }
 
   const named = visiblePrompts.filter((p) => p.mentionRate > 0).length;
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
+
       <PageHeader
         eyebrow="ChatGPT & AI"
         title={

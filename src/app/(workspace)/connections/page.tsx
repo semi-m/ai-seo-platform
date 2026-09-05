@@ -18,18 +18,11 @@ export default function ConnectionsPage() {
         description="Search Console for keywords you rank for. Serper for page-one checks. ChatGPT and Gemini for AI rank. Daily analytics when GA4 is on."
       />
 
-      {usingDemo ? (
-        <p className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-          Right now you are looking at a sample company (Northline). Connecting
-          here remembers your choices in this browser. Live Google / OpenAI keys
-          plug into the same cards — see <code className="font-mono">.env.example</code>.
-        </p>
-      ) : (
-        <p className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-950">
-          Required sources are marked on. Live APIs still need keys in the
-          environment to actually fetch.
-        </p>
-      )}
+      <p className="mb-8 text-[13px] leading-relaxed text-muted-foreground">
+        {usingDemo
+          ? "Toggles here are remembered in this browser. They do not pull live Google or ChatGPT yet — the rooms still show the sample company."
+          : "Required sources are marked on. Live fetches still need the keys in the environment."}
+      </p>
 
       <section className="mb-10">
         <h2 className="mb-3 font-heading text-xl">Do these first</h2>

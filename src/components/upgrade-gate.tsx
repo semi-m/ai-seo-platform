@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { planById, type PlanId } from "@/lib/tiers";
 
 export function UpgradeGate({
@@ -15,20 +14,15 @@ export function UpgradeGate({
 }) {
   const plan = planById[need];
   return (
-    <Card>
-      <CardContent className="py-8">
-        <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-          {plan.name} · {plan.price}
-        </p>
-        <h2 className="mt-2 font-heading text-2xl tracking-tight">{title}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{children}</p>
-        <Link
-          href="/plans"
-          className="mt-5 inline-flex h-8 items-center rounded-lg bg-primary px-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
-        >
-          See plans
-        </Link>
-      </CardContent>
-    </Card>
+    <section className="border-y border-border py-8">
+      <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+        {plan.name} · {plan.price}
+      </p>
+      <h2 className="mt-2 font-heading text-2xl tracking-tight">{title}</h2>
+      <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">{children}</p>
+      <Link href="/plans" className="mt-5 inline-block text-sm underline underline-offset-4">
+        See plans
+      </Link>
+    </section>
   );
 }

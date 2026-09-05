@@ -2,21 +2,24 @@
 
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { UpgradeGate } from "@/components/upgrade-gate";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { useWorkspace } from "@/lib/workspace-context";
 
 export default function WeeklyPage() {
-  const { workspace, loading, limits } = useWorkspace();
+  const { workspace, loading, limits, usingDemo } = useWorkspace();
 
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Opening the week…</p>;
+    return <PageSkeleton label="Opening the week…" />;
   }
 
   if (!limits.weeklyDocument) {
     return (
       <div>
+        {usingDemo ? <SampleNotice /> : null}
         <PageHeader
           eyebrow="Weekly"
           title="A progress document — not the homepage"
@@ -34,13 +37,14 @@ export default function WeeklyPage() {
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
       <PageHeader
         eyebrow={brief.weekOf}
         title="Weekly progress"
         description="One document. What moved. What to look at next. How to repair it is a different tier."
       />
 
-      <article className="rounded-2xl border border-border bg-card p-5 sm:p-8">
+      <article className="border-y border-border py-8">
         <p className="font-heading text-xl leading-relaxed sm:text-[1.35rem]">
           {brief.headline}
         </p>

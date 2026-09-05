@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { RecommendationList } from "@/components/recommendation-list";
 import { UpgradeGate } from "@/components/upgrade-gate";
 import { Button } from "@/components/ui/button";
@@ -17,16 +19,17 @@ const filters: { id: RecStatus | "all"; label: string }[] = [
 ];
 
 export default function RecommendationsPage() {
-  const { workspace, loading, resetDemo, limits } = useWorkspace();
+  const { workspace, loading, resetDemo, limits, usingDemo } = useWorkspace();
   const [filter, setFilter] = useState<RecStatus | "all">("open");
 
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Loading…</p>;
+    return <PageSkeleton label="Loading…" />;
   }
 
   if (!limits.diagnosis) {
     return (
       <div>
+        {usingDemo ? <SampleNotice /> : null}
         <PageHeader
           eyebrow="To fix"
           title="Look does not give you solutions"
@@ -47,6 +50,7 @@ export default function RecommendationsPage() {
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
       <div className="mb-2 flex flex-wrap items-start justify-between gap-3">
         <PageHeader
           eyebrow="To fix"

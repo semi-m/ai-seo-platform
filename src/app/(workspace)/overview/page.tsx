@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { formatDelta, formatVisits, positionLabel } from "@/lib/scoring";
 import { pct } from "@/lib/format";
+import { todaySentence } from "@/lib/today-copy";
 import { useWorkspace } from "@/lib/workspace-context";
 
 export default function OverviewPage() {
@@ -21,7 +22,7 @@ export default function OverviewPage() {
   } = useWorkspace();
 
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Opening today…</p>;
+    return <PageSkeleton label="Opening today…" />;
   }
 
   const rival = visibleRivals[0];
@@ -30,209 +31,161 @@ export default function OverviewPage() {
 
   return (
     <div>
-      {usingDemo ? (
-        <Link
-          href="/connections"
-          className="mb-6 flex items-start justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950"
-        >
-          <span>
-            Sample company so you can click around. Connect Google when you want
-            live numbers. Switch plans anytime to see what each tier unlocks.
-          </span>
-          <span className="shrink-0 font-medium underline-offset-4 hover:underline">
-            Connect
-          </span>
-        </Link>
-      ) : null}
+      {usingDemo ? <SampleNotice /> : null}
 
       <PageHeader
         eyebrow={`${workspace.daily.checkedAt} · ${plan.name}`}
-        title={`${workspace.brand}, today`}
-        description={
-          limits.diagnosis
-            ? "Daily picture first. The Monday document and the “what to fix” list sit next to it — they are not the homepage."
-            : "A day-to-day look at your SEO. We monitor a few things. We do not tell you what to fix."
-        }
+        title={workspace.brand}
+        description={todaySentence({
+          ups: ups.length,
+          named,
+          prompts: visiblePrompts.length,
+          rival: rival?.name,
+        })}
       />
 
-      <div className="mb-6 grid gap-2 sm:grid-cols-3">
-        <Card>
-          <CardContent className="py-4">
-            <p className="text-xs text-muted-foreground">Visits yesterday</p>
-            <p className="font-heading text-3xl">{formatVisits(workspace.daily.visits)}</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {formatDelta(workspace.daily.visitsDelta)} vs the day before
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="py-4">
-            <p className="text-xs text-muted-foreground">Keywords you rank for</p>
-            <p className="font-heading text-3xl">{visibleKeywords.length}</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {limits.rankedKeywordsOnly
-                ? "Terms you already appear on"
-                : "Including gaps and slipping terms"}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="py-4">
-            <p className="text-xs text-muted-foreground">
-              AI rank · {visiblePrompts.length} prompts
-            </p>
-            <p className="font-heading text-3xl">
-              {named}/{visiblePrompts.length}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">Named in the answer</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <section className="mb-8 rounded-2xl border border-border bg-card p-5 sm:p-6">
-        <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-          Email when you go up
-        </p>
-        <p className="mt-2 text-[15px] leading-relaxed">{workspace.daily.emailPromise}</p>
-        <div className="mt-4 rounded-xl bg-muted/70 px-4 py-3">
-          <p className="text-xs text-muted-foreground">{workspace.daily.lastEmail.sent}</p>
-          <p className="mt-1 text-sm font-medium">{workspace.daily.lastEmail.subject}</p>
+      <dl className="mb-8 grid grid-cols-3 gap-3 border-y border-border py-5">
+        <div>
+          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">Yesterday</dt>
+          <dd className="mt-1 font-heading text-3xl tracking-tight">
+            {formatVisits(workspace.daily.visits)}
+          </dd>
+          <dd className="mt-1 text-xs text-muted-foreground">
+            {formatDelta(workspace.daily.visitsDelta)} visits
+          </dd>
         </div>
-        {ups.length > 0 ? (
-          <ul className="mt-4 space-y-1.5 text-sm">
+        <div>
+          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">Google</dt>
+          <dd className="mt-1 font-heading text-3xl tracking-tight">{visibleKeywords.length}</dd>
+          <dd className="mt-1 text-xs text-muted-foreground">
+            {limits.rankedKeywordsOnly ? "terms you rank for" : "terms we track"}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">AI</dt>
+          <dd className="mt-1 font-heading text-3xl tracking-tight">
+            {named}/{visiblePrompts.length}
+          </dd>
+          <dd className="mt-1 text-xs text-muted-foreground">named in the answer</dd>
+        </div>
+      </dl>
+
+      <section className="mb-10">
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="font-heading text-2xl tracking-tight">Went up</h2>
+          <p className="text-xs text-muted-foreground">We email you these</p>
+        </div>
+        {ups.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No upward moves since yesterday.</p>
+        ) : (
+          <ul className="divide-y divide-border border-y border-border">
             {ups.map((m) => (
-              <li key={m.term}>
-                <Badge variant="secondary" className="mr-2">
-                  Up
-                </Badge>
-                {m.term} · #{m.from} → #{m.to}
+              <li key={m.term} className="flex items-baseline justify-between gap-3 py-3">
+                <span className="text-sm">{m.term}</span>
+                <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                  #{m.from} → #{m.to}
+                </span>
               </li>
             ))}
           </ul>
-        ) : null}
+        )}
+        <p className="mt-3 text-[13px] text-muted-foreground">
+          Last mail · {workspace.daily.lastEmail.sent}
+          <span className="mt-0.5 block text-foreground/80">{workspace.daily.lastEmail.subject}</span>
+        </p>
       </section>
 
-      <h2 className="mb-3 font-heading text-2xl tracking-tight">What we watch</h2>
-      <div className="mb-8 space-y-2">
-        {workspace.channels.slice(0, 4).map((ch) => (
-          <div
-            key={ch.name}
-            className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-sm"
-          >
-            <span>{ch.name}</span>
-            <span className="text-muted-foreground">
-              {formatVisits(ch.visits)} · {formatDelta(ch.delta)}
-            </span>
-          </div>
-        ))}
+      <div className="mb-10 grid gap-10 sm:grid-cols-2">
+        <section>
+          <h2 className="mb-3 font-heading text-2xl tracking-tight">Rival</h2>
+          {rival ? (
+            <>
+              <p className="text-base font-medium">{rival.name}</p>
+              <p className="mt-0.5 font-mono text-xs text-muted-foreground">{rival.domain}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{rival.momentum}</p>
+              {limits.diagnosis ? (
+                <Link
+                  href="/competitors"
+                  className="mt-3 inline-block text-sm underline underline-offset-4"
+                >
+                  See the gap
+                </Link>
+              ) : (
+                <p className="mt-3 text-[13px] text-muted-foreground">
+                  Look watches one. We do not explain how to beat them.
+                </p>
+              )}
+            </>
+          ) : null}
+        </section>
+        <section>
+          <h2 className="mb-3 font-heading text-2xl tracking-tight">
+            {visiblePrompts.length} AI questions
+          </h2>
+          <ul className="space-y-3">
+            {visiblePrompts.map((p) => (
+              <li key={p.id}>
+                <p className="text-[13px] text-muted-foreground">
+                  {p.mentionRate > 0 ? `${pct(p.mentionRate)} named` : "Not named"}
+                </p>
+                <p className="text-sm leading-snug">“{p.text}”</p>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
-      <div className="mb-8 grid gap-3 sm:grid-cols-2">
-        <Card>
-          <CardContent className="py-5">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              One rival
-            </p>
-            {rival ? (
-              <>
-                <p className="mt-2 text-base font-medium">{rival.name}</p>
-                <p className="mt-1 font-mono text-xs text-muted-foreground">{rival.domain}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{rival.momentum}</p>
-                {limits.diagnosis ? (
-                  <Link
-                    href="/competitors"
-                    className="mt-3 inline-block text-sm text-primary underline-offset-4 hover:underline"
-                  >
-                    See the gap
-                  </Link>
-                ) : (
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    Free watches one rival. We do not explain how to beat them.
-                  </p>
-                )}
-              </>
-            ) : null}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="py-5">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              AI prompts
-            </p>
-            <ul className="mt-3 space-y-2 text-sm">
-              {visiblePrompts.map((p) => (
-                <li key={p.id}>
-                  <span className="text-muted-foreground">
-                    {p.mentionRate > 0 ? pct(p.mentionRate) : "Not named"}
-                  </span>
-                  <span className="mt-0.5 block leading-snug">“{p.text}”</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+      <section className="mb-10">
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="font-heading text-2xl tracking-tight">You rank for</h2>
+          <Link href="/search" className="text-sm underline underline-offset-4">
+            All Google
+          </Link>
+        </div>
+        <ul className="divide-y divide-border border-y border-border">
+          {visibleKeywords.slice(0, 6).map((kw) => (
+            <li key={kw.id} className="flex items-baseline justify-between gap-3 py-3">
+              <span className="text-sm">{kw.term}</span>
+              <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                {positionLabel(kw.position)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <h2 className="mb-3 font-heading text-2xl tracking-tight">Keywords you rank for</h2>
-      <div className="mb-8 space-y-2">
-        {visibleKeywords.slice(0, 6).map((kw) => (
-          <div
-            key={kw.id}
-            className="flex flex-wrap items-baseline justify-between gap-2 rounded-xl border border-border bg-card px-4 py-3"
-          >
-            <p className="text-sm font-medium">{kw.term}</p>
-            <p className="text-sm text-muted-foreground">{positionLabel(kw.position)}</p>
-          </div>
-        ))}
-        <Link
-          href="/search"
-          className="inline-block text-sm text-primary underline-offset-4 hover:underline"
-        >
-          Full Google list
-        </Link>
-      </div>
-
-      {!limits.diagnosis ? (
-        <Card>
-          <CardContent className="py-5">
-            <p className="text-base font-medium">No solutions on Look</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Watch (monthly) adds the weekly progress document and tells you what
-              is broken. Fix (enterprise) is a call — we show you how.
-            </p>
-            <Link
-              href="/plans"
-              className="mt-3 inline-block text-sm text-primary underline-offset-4 hover:underline"
-            >
-              Compare plans
+      <p className="border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
+        {!limits.diagnosis ? (
+          <>
+            Look does not give solutions.{" "}
+            <Link href="/plans" className="text-foreground underline underline-offset-4">
+              Watch names what is broken. Fix shows you how.
             </Link>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardContent className="py-5">
-            <p className="text-base font-medium">
-              {limits.howTo ? "How to fix it is unlocked" : "What to fix is unlocked"}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {limits.howTo
-                ? "Open To fix for the playbook, or Weekly for the Monday document."
-                : "We name the problem. We do not write the playbook. That is the next tier."}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-4 text-sm">
-              <Link href="/weekly" className="text-primary underline-offset-4 hover:underline">
-                Weekly document
-              </Link>
-              <Link
-                href="/recommendations"
-                className="text-primary underline-offset-4 hover:underline"
-              >
-                What to fix
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+          </>
+        ) : limits.howTo ? (
+          <>
+            How to fix is open.{" "}
+            <Link href="/weekly" className="text-foreground underline underline-offset-4">
+              Weekly document
+            </Link>
+            {" · "}
+            <Link href="/recommendations" className="text-foreground underline underline-offset-4">
+              To fix
+            </Link>
+          </>
+        ) : (
+          <>
+            We can name what is broken. Not how.{" "}
+            <Link href="/weekly" className="text-foreground underline underline-offset-4">
+              Weekly
+            </Link>
+            {" · "}
+            <Link href="/recommendations" className="text-foreground underline underline-offset-4">
+              To fix
+            </Link>
+          </>
+        )}
+      </p>
     </div>
   );
 }

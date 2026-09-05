@@ -10,14 +10,13 @@ import {
   FileText,
   ListChecks,
   Lock,
-  Menu,
   Search,
   ShieldAlert,
   Sun,
   Tags,
   Users,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MobileTabBar } from "@/components/mobile-tab-bar";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useWorkspace } from "@/lib/workspace-context";
@@ -31,8 +30,8 @@ const daily = [
 ];
 
 const paid = [
-  { href: "/weekly", label: "Weekly", icon: FileText, need: "pro" as const },
-  { href: "/recommendations", label: "To fix", icon: ListChecks, need: "pro" as const },
+  { href: "/weekly", label: "Weekly", icon: FileText },
+  { href: "/recommendations", label: "To fix", icon: ListChecks },
 ];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
@@ -43,15 +42,15 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
     return cn(
       "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
       active
-        ? "bg-primary text-primary-foreground"
+        ? "bg-foreground text-background"
         : "text-muted-foreground hover:bg-accent hover:text-foreground",
     );
   };
 
   return (
-    <nav className="flex flex-col gap-4">
+    <nav className="flex flex-col gap-5">
       <div>
-        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground/80">
+        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground/80">
           Every day
         </p>
         <div className="flex flex-col gap-0.5">
@@ -67,19 +66,19 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
         </div>
       </div>
       <div>
-        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground/80">
+        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground/80">
           Paid
         </p>
         <div className="flex flex-col gap-0.5">
           {paid.map((item) => {
             const Icon = item.icon;
-            const locked = item.need === "pro" && !limits.weeklyDocument;
+            const locked = !limits.weeklyDocument;
             return (
               <Link key={item.href} href={item.href} onClick={onNavigate} className={linkClass(item.href)}>
                 <Icon className="size-4" />
                 {item.label}
                 {locked ? (
-                  <span className="ml-auto text-[10px] uppercase tracking-wide opacity-70">Watch</span>
+                  <span className="ml-auto text-[10px] tracking-wide text-muted-foreground">Watch</span>
                 ) : null}
               </Link>
             );
@@ -105,22 +104,24 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function BrandBlock() {
-  const { workspace, providerLabel, plan } = useWorkspace();
+  const { workspace, usingDemo, plan } = useWorkspace();
   return (
-    <div className="px-3 pb-4">
-      <Link href="/overview" className="flex items-center gap-2 font-medium">
-        <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Compass className="size-4" />
+    <div className="px-3 pb-5">
+      <Link href="/overview" className="flex items-center gap-2">
+        <span className="flex size-8 items-center justify-center rounded-full bg-foreground text-background">
+          <Compass className="size-3.5" />
         </span>
-        <span className="text-[15px] tracking-tight">Lyra</span>
+        <span className="font-heading text-xl tracking-tight">Lyra</span>
       </Link>
-      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-        {workspace.brand}
-        <span className="block">{workspace.domain}</span>
-      </p>
-      <p className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground/80">
-        {plan.name} · {providerLabel}
-      </p>
+      <p className="mt-4 text-sm font-medium">{workspace.brand}</p>
+      <p className="font-mono text-[11px] text-muted-foreground">{workspace.domain}</p>
+      <Link
+        href="/plans"
+        className="mt-3 inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted-foreground hover:border-foreground/30 hover:text-foreground"
+      >
+        {plan.name}
+        {usingDemo ? " · sample" : ""}
+      </Link>
     </div>
   );
 }
@@ -131,44 +132,42 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh bg-background">
-      <aside className="fixed inset-y-0 left-0 hidden w-60 border-r border-border/80 bg-sidebar px-3 py-5 lg:flex lg:flex-col">
+      <aside className="fixed inset-y-0 left-0 hidden w-56 border-r border-border/70 bg-background px-2 py-6 lg:flex lg:flex-col">
         <BrandBlock />
         <NavLinks />
-        <div className="mt-auto px-3 pt-6 text-xs text-muted-foreground">
+        <p className="mt-auto px-3 pt-8 text-[11px] leading-relaxed text-muted-foreground">
           {limits.howTo
-            ? "We show you how to fix it"
+            ? "We show you how to fix it."
             : limits.diagnosis
-              ? "What is broken — not how"
-              : "Monitoring only"}
-        </div>
+              ? "What is broken — not how."
+              : "Monitoring only. No solutions."}
+        </p>
       </aside>
 
-      <div className="lg:pl-60">
-        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-border/80 bg-background/85 px-4 py-3 backdrop-blur lg:hidden">
-          <div className="flex items-center gap-2 text-sm font-medium">
+      <div className="lg:pl-56">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-border/70 bg-background/90 px-4 py-3 backdrop-blur lg:hidden">
+          <Link href="/overview" className="flex items-center gap-2 font-heading text-lg tracking-tight">
             <Compass className="size-4" />
             Lyra
-            <span className="text-xs font-normal text-muted-foreground">{plan.name}</span>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Open menu"
-            onClick={() => setOpen(true)}
+          </Link>
+          <Link
+            href="/plans"
+            className="rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted-foreground"
           >
-            <Menu className="size-5" />
-          </Button>
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetContent side="left" className="w-64 px-3 pt-6">
-              <SheetTitle className="sr-only">Navigation</SheetTitle>
-              <BrandBlock />
-              <NavLinks onNavigate={() => setOpen(false)} />
-            </SheetContent>
-          </Sheet>
+            {plan.name}
+          </Link>
         </header>
-        <main className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6 lg:py-10">
+        <main className="mx-auto w-full max-w-2xl px-4 pb-24 pt-6 sm:px-6 lg:pb-12 lg:pt-10">
           {children}
         </main>
+        <MobileTabBar onMore={() => setOpen(true)} />
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetContent side="left" className="w-72 bg-background px-3 pt-6">
+            <SheetTitle className="sr-only">More</SheetTitle>
+            <BrandBlock />
+            <NavLinks onNavigate={() => setOpen(false)} />
+          </SheetContent>
+        </Sheet>
       </div>
     </div>
   );

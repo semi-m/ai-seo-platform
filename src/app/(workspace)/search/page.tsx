@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { PageSkeleton } from "@/components/page-skeleton";
+import { SampleNotice } from "@/components/sample-notice";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { KeywordBucket } from "@/lib/types";
@@ -17,7 +19,7 @@ const allBuckets: { id: KeywordBucket; label: string; blurb: string }[] = [
 ];
 
 export default function SearchPage() {
-  const { workspace, loading, limits, visibleKeywords, lockedKeywordCount } =
+  const { loading, limits, visibleKeywords, lockedKeywordCount, usingDemo } =
     useWorkspace();
   const buckets = limits.rankedKeywordsOnly
     ? allBuckets.filter((b) => b.id !== "opportunity")
@@ -36,13 +38,15 @@ export default function SearchPage() {
   }, [visibleKeywords, buckets]);
 
   if (loading) {
-    return <p className="text-sm text-muted-foreground">Loading keywords…</p>;
+    return <PageSkeleton label="Loading keywords…" />;
   }
 
   const activeTab = buckets.some((b) => b.id === tab) ? tab : "winning";
 
   return (
     <div>
+      {usingDemo ? <SampleNotice /> : null}
+
       <PageHeader
         eyebrow="Google"
         title={
