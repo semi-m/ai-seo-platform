@@ -28,12 +28,7 @@ export function NotificationBell() {
         ) : null}
       </button>
       {open ? (
-        <div className="glass absolute top-12 right-0 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.5rem] p-4">
-          <div className="mb-3 flex items-center gap-4 text-sm">
-            <span className="border-b-2 border-ink pb-1 font-semibold">All</span>
-            <span className="text-muted-foreground">Google</span>
-            <span className="text-muted-foreground">System</span>
-          </div>
+        <div className="absolute top-12 right-0 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.5rem] border border-ink/15 bg-ivory p-4 shadow-lg">
           <ul className="space-y-1">
             {ups.map((m) => (
               <li key={m.term} className="flex items-start gap-3 rounded-2xl px-1 py-2">
