@@ -12,7 +12,7 @@ import { useWorkspace } from "@/lib/workspace-context";
 const severityLabel: Record<HealthSeverity, string> = {
   critical: "Critical",
   important: "Important",
-  improvement: "Improvement",
+  improvement: "Nice to fix",
 };
 
 const bucketLabel: Record<ContentPage["bucket"], string> = {
@@ -25,8 +25,11 @@ const bucketLabel: Record<ContentPage["bucket"], string> = {
 
 const channelBar: Record<string, string> = {
   Google: "bg-blue",
+  ChatGPT: "bg-indigo",
   "AI referrals": "bg-indigo",
+  "Typed your site": "bg-pear",
   Direct: "bg-pear",
+  "Other websites": "bg-blue/70",
   Referral: "bg-blue/70",
   LinkedIn: "bg-indigo/80",
   Email: "bg-pear/70",
@@ -53,9 +56,9 @@ export default function HealthPage() {
       {usingDemo ? <SampleNotice /> : null}
 
       <PageHeader
-        eyebrow="Traffic"
-        title="Where visits come from"
-        description="Yesterday’s total, the channels that sent people, and the pages they landed on. A daily glance — not a full analytics suite."
+        eyebrow="Website"
+        title="Who sent people"
+        description="Yesterday’s visits. Who sent them. Which pages they opened."
       />
 
       <section className="glass mb-4 rounded-[1.5rem] px-5 py-6">
@@ -71,19 +74,19 @@ export default function HealthPage() {
           </span>
           {" · "}
           {workspace.daily.checkedAt}
-          {periodVisits > 0 ? ` · ${formatVisits(periodVisits)} across this snapshot` : null}
+          {periodVisits > 0 ? ` · ${formatVisits(periodVisits)} in this mix` : null}
         </p>
       </section>
 
       <div className="mb-4 grid gap-4 lg:grid-cols-5">
         <section className="glass rounded-[1.5rem] px-5 py-5 lg:col-span-3">
-          <h2 className="text-base font-semibold">Where it comes from</h2>
+          <h2 className="text-base font-semibold">Who sent people</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Channels that sent visits — Google, AI, direct, and the rest.
+            Google, ChatGPT, and the rest.
           </p>
           {channels.length === 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">
-              No channel mix in this snapshot.
+              We do not have this mix yet.
             </p>
           ) : (
             <ul className="mt-4 space-y-3">
@@ -108,7 +111,7 @@ export default function HealthPage() {
                     />
                   </div>
                   <p className={cn("mt-1 text-[11px]", deltaClass(channel.delta))}>
-                    {formatDelta(channel.delta)} vs last snapshot
+                    {formatDelta(channel.delta)} vs last check
                   </p>
                 </li>
               ))}
@@ -117,13 +120,13 @@ export default function HealthPage() {
         </section>
 
         <section className="glass rounded-[1.5rem] px-5 py-5 lg:col-span-2">
-          <h2 className="text-base font-semibold">Countries</h2>
+          <h2 className="text-base font-semibold">Where they live</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            The markets sending the visits.
+            Which countries those people came from.
           </p>
           {markets.length === 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">
-              No country mix in this snapshot.
+              We do not have this mix yet.
             </p>
           ) : (
             <ul className="mt-4 space-y-3">
@@ -156,14 +159,14 @@ export default function HealthPage() {
       </div>
 
       <section className="glass mb-6 rounded-[1.5rem] px-5 py-5">
-        <h2 className="text-base font-semibold">Pages</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Where those visits landed.
-        </p>
-        {pages.length === 0 ? (
-          <p className="mt-4 text-sm text-muted-foreground">
-            No page traffic in this snapshot.
+          <h2 className="text-base font-semibold">Which pages they opened</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Where those people landed.
           </p>
+          {pages.length === 0 ? (
+            <p className="mt-4 text-sm text-muted-foreground">
+              We do not have page visits yet.
+            </p>
         ) : (
           <ul className="mt-4 space-y-1">
             {pages.map((page) => (
@@ -199,10 +202,10 @@ export default function HealthPage() {
       {!limits.diagnosis ? (
         <section className="glass rounded-[1.5rem] px-5 py-5">
           <p className="text-base font-medium">
-            {workspace.issues.length} page issues sit behind Watch
+            {workspace.issues.length} things on your site sit behind Watch
           </p>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Look shows the traffic. Monthly names what is broken on money pages.
+            Look shows the visits. Watch names what is broken.
           </p>
           <Link
             href="/plans"
@@ -227,14 +230,14 @@ export default function HealthPage() {
                         <p>{issue.fix}</p>
                       ) : (
                         <p className="text-muted-foreground">
-                          This is the problem. The repair steps are on Fix.
+                          This is the problem. How to fix it is on Fix.
                         </p>
                       )}
                       <p className="text-muted-foreground">
                         Pages: {issue.pages.join(", ")}
                       </p>
                       <p className="text-muted-foreground">
-                        Keywords: {issue.keywords.join(", ") || "—"}
+                        Searches: {issue.keywords.join(", ") || "—"}
                       </p>
                     </div>
                   </div>

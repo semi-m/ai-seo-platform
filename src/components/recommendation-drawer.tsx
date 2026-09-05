@@ -57,7 +57,7 @@ export function RecommendationDrawer({
           {limits.howTo ? (
             <Badge variant="outline">{effortLabel(rec.effort)}</Badge>
           ) : null}
-          <Badge variant="outline">Confidence {rec.confidence}</Badge>
+          <Badge variant="outline">How sure we are {rec.confidence}</Badge>
           {rec.channels.map((c) => (
             <Badge key={c} variant="secondary">
               {c}
@@ -68,12 +68,13 @@ export function RecommendationDrawer({
         <div className="space-y-5 px-4 pb-8">
           <section>
             <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Why this ranks #{score}
+              Why this is #{score} on the list
             </h3>
             <p className="mb-3 text-sm text-muted-foreground">
-              Score = 0.24 demand + 0.20 relevance + 0.18 gap + 0.16 reachability +
-              0.12 competitor pressure + 0.10 confidence. The model writes the
-              sentences. It does not invent this number.
+              We stack six things: how many people ask, whether it fits what you
+              sell, how far behind you are, whether you can win, whether rivals
+              already own it, and how sure we are. The number comes from those —
+              not made up.
             </p>
             <dl className="space-y-2">
               {Object.entries(rec.factors).map(([key, value]) => (
@@ -106,14 +107,14 @@ export function RecommendationDrawer({
                 How to fix it
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Watch names the problem. Fix is a call — we walk this in the tool.
+                Watch names the problem. Fix is a call — we walk this with you.
               </p>
             </section>
           )}
 
           <section>
             <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Evidence
+              Why we think this
             </h3>
             <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed">
               {rec.why.map((line) => (
@@ -131,13 +132,13 @@ export function RecommendationDrawer({
             ) : null}
             {rec.market ? (
               <div>
-                <dt className="text-xs text-muted-foreground">Market</dt>
+                <dt className="text-xs text-muted-foreground">Country</dt>
                 <dd>{rec.market}</dd>
               </div>
             ) : null}
             {rec.competitor ? (
               <div>
-                <dt className="text-xs text-muted-foreground">Competitor evidence</dt>
+                <dt className="text-xs text-muted-foreground">Rival who is winning</dt>
                 <dd>{rec.competitor}</dd>
               </div>
             ) : null}
@@ -168,7 +169,7 @@ export function RecommendationDrawer({
                 onOpenChange(false);
               }}
             >
-              Dismiss
+              Skip
             </Button>
           </div>
         </div>

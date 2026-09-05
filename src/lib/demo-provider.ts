@@ -10,7 +10,7 @@ export const demoWorkspace: Workspace = {
   ],
   periodLabel: "Checked today, 7:40",
   weeklyNarrative:
-    "AI visibility +11% this week because /ai-automation began appearing in eight ChatGPT and Gemini prompt clusters. Organic traffic −7% because three service pages lost Google positions. Adaforge gained AI share after two new editorial mentions on Clutch and a “best AI agencies” roundup.",
+    "ChatGPT named you more this week because /ai-automation showed up in eight answers. Visits from Google went down 7% because three money pages dropped. Adaforge got named more after Clutch and a “best AI agencies” list.",
   daily: {
     checkedAt: "Today, 7:40",
     visits: 842,
@@ -29,7 +29,7 @@ export const demoWorkspace: Workspace = {
   weeklyBrief: {
     weekOf: "Week of 1 Sep 2026",
     headline:
-      "You went up in AI on automation. You went down on three money pages in Google. Adaforge took more of the commercial answers.",
+      "You went up in ChatGPT on automation. You went down on three money pages in Google. Adaforge took more of the hiring answers.",
     wins: [
       "/ai-automation is now named in eight ChatGPT and Gemini answers.",
       "“ai automation agency belgium” moved 4 → 3.",
@@ -45,7 +45,7 @@ export const demoWorkspace: Workspace = {
     toFix: [
       {
         id: "r-1",
-        problem: "No coverage for “AI SaaS development”",
+        problem: "No page for “AI SaaS development”",
         impact: "Very high",
       },
       {
@@ -76,11 +76,11 @@ export const demoWorkspace: Workspace = {
       },
       {
         id: "ai",
-        label: "AI visibility",
+        label: "ChatGPT",
         score: 54,
         delta: 11,
         tone: "watch",
-        summary: "Present in informational answers; absent from 14 high-intent prompts.",
+        summary: "Named in some answers. Missing from 14 questions people ask when they want to hire.",
         href: "/ai-visibility",
       },
       {
@@ -98,7 +98,7 @@ export const demoWorkspace: Workspace = {
         score: 79,
         delta: 0,
         tone: "good",
-        summary: "Indexable, but schema gaps on 12 priority pages.",
+        summary: "Google can find the pages. 12 money pages still do not say what you sell.",
         href: "/health",
       },
     ],
@@ -119,7 +119,7 @@ export const demoWorkspace: Workspace = {
       trafficDelta: 4,
       search: 83,
       ai: 64,
-      note: "Home market. Search is healthy; AI mentions still trail Adaforge on commercial prompts.",
+      note: "Home market. Google is fine. ChatGPT still names Adaforge more when people want to hire.",
     },
     {
       country: "Netherlands",
@@ -128,7 +128,7 @@ export const demoWorkspace: Workspace = {
       trafficDelta: 9,
       search: 62,
       ai: 38,
-      note: "Strong traffic, underrepresented in AI answers versus Belgium. Highest-leverage market this month.",
+      note: "Lots of visits. ChatGPT names you less here than in Belgium.",
     },
     {
       country: "United States",
@@ -137,7 +137,7 @@ export const demoWorkspace: Workspace = {
       trafficDelta: -3,
       search: 72,
       ai: 54,
-      note: "Largest volume, softer conversion. Rankings slipped on three service pages.",
+      note: "Most visits. Three money pages slipped on Google.",
     },
   ],
   keywords: [
@@ -320,7 +320,7 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Adaforge", "Stackwright", "Helix Labs"],
       blockers: [
         "No dedicated page for AI SaaS development",
-        "Competitors appear on Clutch and a widely cited roundup",
+        "Rivals appear on Clutch and a list ChatGPT already uses",
         "Category language on /ai-development is too generic",
       ],
       sources: ["clutch.co", "topaiagencies.com", "gartner.com"],
@@ -538,7 +538,7 @@ export const demoWorkspace: Workspace = {
         gemini: { mentionRate: 0.33, citationRate: 0.33 },
       },
       competitorsPresent: ["Adaforge"],
-      blockers: ["ChatGPT does not recommend Northline on this cluster"],
+      blockers: ["ChatGPT does not recommend Northline on this question."],
       sources: ["northline.ai/ai-automation", "forbes.com"],
       answers: [
         {
@@ -688,7 +688,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "Very high impact",
       effort: "medium",
       confidence: 86,
-      channels: ["Google", "AI"],
+      channels: ["Google", "ChatGPT"],
       market: "US + EU",
       page: "/ai-saas-development (new)",
       competitor: "Adaforge",
@@ -717,7 +717,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "High impact",
       effort: "low",
       confidence: 81,
-      channels: ["AI", "Referral"],
+      channels: ["ChatGPT", "Other websites"],
       competitor: "Adaforge",
       status: "open",
       factors: {
@@ -744,7 +744,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "High impact",
       effort: "medium",
       confidence: 84,
-      channels: ["Google", "AI"],
+      channels: ["Google", "ChatGPT"],
       market: "BE + NL",
       page: "/software-development",
       competitor: "Velora",
@@ -772,7 +772,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "Medium impact",
       effort: "high",
       confidence: 72,
-      channels: ["Authority", "AI"],
+      channels: ["Sites that name rivals", "ChatGPT"],
       competitor: "Adaforge",
       status: "open",
       factors: {
@@ -798,7 +798,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "Medium impact",
       effort: "low",
       confidence: 77,
-      channels: ["Google", "AI"],
+      channels: ["Google", "ChatGPT"],
       page: "12 priority URLs",
       status: "open",
       factors: {
@@ -824,7 +824,7 @@ export const demoWorkspace: Workspace = {
       impactLabel: "High impact",
       effort: "medium",
       confidence: 79,
-      channels: ["AI", "Google"],
+      channels: ["ChatGPT", "Google"],
       market: "NL",
       competitor: "Helix Labs",
       status: "open",
@@ -930,7 +930,7 @@ export const demoWorkspace: Workspace = {
 
 export const demoProvider: DiscoverabilityProvider = {
   name: "demo",
-  label: "Demo workspace (Northline)",
+  label: "Sample company (Northline)",
   live: false,
   async loadWorkspace() {
     return structuredClone(demoWorkspace);

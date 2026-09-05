@@ -13,7 +13,7 @@ export default function PlansPage() {
       <PageHeader
         eyebrow="Plans"
         title="Look every day. Pay to know what is broken. Call us to fix it."
-        description="The product is the daily view. The weekly document is a paid progress report. Billing is not on yet — these buttons only change what you can see."
+        description="The product is the daily look. The Monday write-up is paid. Billing is not on yet — these buttons only change what you can see."
       />
 
       <div className="divide-y divide-border border-y border-border">

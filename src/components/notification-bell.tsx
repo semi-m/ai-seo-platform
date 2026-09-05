@@ -31,7 +31,7 @@ export function NotificationBell() {
         <div className="glass absolute top-12 right-0 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.5rem] p-4">
           <div className="mb-3 flex items-center gap-4 text-sm">
             <span className="border-b-2 border-ink pb-1 font-semibold">All</span>
-            <span className="text-muted-foreground">Ranks</span>
+            <span className="text-muted-foreground">Google</span>
             <span className="text-muted-foreground">System</span>
           </div>
           <ul className="space-y-1">

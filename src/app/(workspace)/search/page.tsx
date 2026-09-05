@@ -38,7 +38,7 @@ export default function SearchPage() {
   }, [visibleKeywords, buckets]);
 
   if (loading) {
-    return <PageSkeleton label="Loading keywords…" />;
+    return <PageSkeleton label="Loading searches…" />;
   }
 
   const activeTab = buckets.some((b) => b.id === tab) ? tab : "winning";
@@ -51,15 +51,15 @@ export default function SearchPage() {
         eyebrow="Google"
         title={
           limits.rankedKeywordsOnly
-            ? "Keywords you already rank for"
+            ? "Searches you already show up for"
             : "What people type — and whether you show up"
         }
         description={
           limits.rankedKeywordsOnly
-            ? "Look finds the terms you already appear on. Gaps and “how to show up for more” are not on this plan."
+            ? "Look finds the searches you already appear on. What you should go after, and how, are not on this plan."
             : limits.howTo
               ? "Four piles, including what to improve and how."
-              : "Four piles. We tell you what is weak. We do not write the page brief."
+              : "Four piles. We tell you what is weak. We do not write the page for you."
         }
       />
 
@@ -82,7 +82,7 @@ export default function SearchPage() {
 
       {lockedKeywordCount > 0 ? (
         <p className="mb-4 text-sm text-muted-foreground">
-          {lockedKeywordCount} gap terms are on Watch.{" "}
+          {lockedKeywordCount} more searches sit on Watch.{" "}
           <Link href="/plans" className="text-primary underline-offset-4 hover:underline">
             See plans
           </Link>
@@ -111,7 +111,7 @@ export default function SearchPage() {
                           <h3 className="text-base font-medium">{kw.term}</h3>
                           <p className="mt-1 text-sm text-muted-foreground">
                             {limits.diagnosis
-                              ? `${formatVisits(kw.volume)} impressions proxy · `
+                              ? `${formatVisits(kw.volume)} searches a month · `
                               : null}
                             {kw.market} · {positionLabel(kw.position)}
                             {kw.previousPosition !== null && kw.position !== null
@@ -120,9 +120,9 @@ export default function SearchPage() {
                           </p>
                         </div>
                         {limits.diagnosis ? (
-                          <Badge variant="outline">Gap {kw.opportunityScore}</Badge>
+                          <Badge variant="outline">Chance {kw.opportunityScore}</Badge>
                         ) : (
-                          <Badge variant="secondary">{kw.bucket}</Badge>
+                          <Badge variant="secondary">{b.label}</Badge>
                         )}
                       </div>
                       {limits.diagnosis && !limits.howTo ? (
@@ -130,7 +130,7 @@ export default function SearchPage() {
                           {kw.action === "create"
                             ? "Problem: no URL covers this. We are not writing the new page."
                             : kw.action === "improve"
-                              ? `Problem: ${kw.page ?? "this page"} is not winning. Competitors: ${kw.competitors.join(", ") || "none listed"}.`
+                              ? `Problem: ${kw.page ?? "this page"} is not winning. Rivals: ${kw.competitors.join(", ") || "none listed"}.`
                               : `You already own ${kw.page ?? "this term"}.`}
                         </p>
                       ) : null}
@@ -146,7 +146,7 @@ export default function SearchPage() {
                           {kw.action === "improve" && (
                             <>
                               How: <strong>improve {kw.page}</strong>. Do not create a
-                              duplicate. Competitors winning:{" "}
+                              second page for the same thing. Rivals winning:{" "}
                               {kw.competitors.join(", ") || "none listed"}.
                             </>
                           )}
@@ -160,9 +160,9 @@ export default function SearchPage() {
                       ) : null}
                       {limits.howTo ? (
                         <div className="flex flex-wrap gap-1.5 text-xs text-muted-foreground">
-                          <span>Difficulty {kw.difficulty}</span>
+                          <span>Hard to win {kw.difficulty}</span>
                           <span>·</span>
-                          <span>Relevance {kw.relevance}</span>
+                          <span>Fits what you sell {kw.relevance}</span>
                           {kw.page ? (
                             <>
                               <span>·</span>

@@ -32,12 +32,12 @@ export default function RecommendationsPage() {
         {usingDemo ? <SampleNotice /> : null}
         <PageHeader
           eyebrow="To fix"
-          title="Look does not give you solutions"
-          description="Free monitors a few things. Watch names what is broken. Fix shows you how."
+          title="Look does not tell you what to fix"
+          description="Look watches a few things. Watch names what is broken. Fix shows you how."
         />
-        <UpgradeGate need="pro" title="What to fix is a monthly feature">
-          From the document: the ranked list of problems — impact, evidence, which
-          page or prompt. Still no playbook. That is the enterprise call.
+        <UpgradeGate need="pro" title="What to fix is on Watch">
+          The list of problems — how big, why we think so, which page. Still no
+          how-to. That is a call with us.
         </UpgradeGate>
       </div>
     );
@@ -56,13 +56,13 @@ export default function RecommendationsPage() {
           eyebrow="To fix"
           title={
             limits.howTo
-              ? "What is broken — and how to repair it"
+              ? "What is broken — and how to fix it"
               : "What you should fix. Not how."
           }
           description={
             limits.howTo
-              ? "This is the enterprise layer. Each card has the diagnosis and the playbook. On a real account this is also the call agenda."
-              : "From the spec: action, reason, impact, evidence. We stop before “do this rewrite.” Upgrade to Fix for the how — and a working session."
+              ? "Each card says what is wrong and how to fix it. On a real account this is also the call."
+              : "What is wrong, why it matters, and why we think so. We stop before “do this rewrite.” Fix is how — and a call."
           }
         />
         <Button variant="ghost" size="sm" onClick={resetDemo}>

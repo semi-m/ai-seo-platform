@@ -22,11 +22,11 @@ export default function WeeklyPage() {
         {usingDemo ? <SampleNotice /> : null}
         <PageHeader
           eyebrow="Weekly"
-          title="A progress document — not the homepage"
-          description="Look is daily monitoring. The Monday write-up is on Watch."
+          title="A Monday write-up — not the homepage"
+          description="Look is the daily look. The Monday write-up is on Watch."
         />
-        <UpgradeGate need="pro" title="Weekly progress is a paid document">
-          Wins, losses, what the rival did, and what is broken. Still no playbook.
+        <UpgradeGate need="pro" title="The Monday write-up is on Watch">
+          Wins, losses, what the rival did, and what is broken. Still no how-to.
           That is Fix.
         </UpgradeGate>
       </div>
@@ -40,8 +40,8 @@ export default function WeeklyPage() {
       {usingDemo ? <SampleNotice /> : null}
       <PageHeader
         eyebrow={brief.weekOf}
-        title="Weekly progress"
-        description="One document. What moved. What to look at next. How to repair it is a different tier."
+        title="What moved this week"
+        description="One write-up. What moved. What to look at next. How to fix it is on Fix."
       />
 
       <article className="border-y border-border py-8">
@@ -83,7 +83,7 @@ export default function WeeklyPage() {
         What you should fix
       </h2>
       <p className="mb-4 text-sm text-muted-foreground">
-        The document names the problems. It does not teach the repair.
+        This names the problems. It does not teach the repair.
       </p>
       <div className="space-y-2">
         {brief.toFix.map((item, index) => (

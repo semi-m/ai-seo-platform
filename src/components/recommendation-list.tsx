@@ -51,7 +51,7 @@ export function RecommendationList({
                     </p>
                   ) : (
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Diagnosis only. How to fix this is on Fix.
+                      This is the problem. How to fix it is on Fix.
                     </p>
                   )}
                   <div className="mt-3 flex flex-wrap gap-1.5">
@@ -76,7 +76,7 @@ export function RecommendationList({
                   className="shrink-0"
                   onClick={() => setActive(rec)}
                 >
-                  Evidence
+                  Why we think this
                 </Button>
               </CardContent>
             </Card>

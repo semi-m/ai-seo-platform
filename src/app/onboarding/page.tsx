@@ -52,8 +52,9 @@ export default function OnboardingPage() {
             Whose site are we watching?
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Name and URL. You land on Look: keywords you already rank for, one
-            rival, three AI questions. No homework, no solutions.
+            Name and website. You land on Look: searches you already show up
+            for, one rival, three questions people ask ChatGPT. We watch. We do
+            not tell you what to fix.
           </p>
           <div className="mt-8 space-y-5">
             <div className="space-y-1.5">
@@ -86,8 +87,8 @@ export default function OnboardingPage() {
             What should people find you for?
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            A few offers, in normal words. We turn them into Google terms and
-            ChatGPT questions.
+            A few offers, in normal words. We turn them into Google searches
+            and questions people ask ChatGPT.
           </p>
           <div className="mt-8 space-y-5">
             <div className="space-y-1.5">

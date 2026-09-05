@@ -40,11 +40,11 @@ export default function OverviewPage() {
       href: "/search",
       label: "Google",
       value: String(visibleKeywords.length),
-      hint: limits.rankedKeywordsOnly ? "terms you rank for" : "terms we track",
+      hint: limits.rankedKeywordsOnly ? "searches you show up for" : "searches we watch",
     },
     {
       href: "/ai-visibility",
-      label: "AI",
+      label: "ChatGPT",
       value: `${named}/${visiblePrompts.length}`,
       hint: "named in the answer",
     },
@@ -81,7 +81,7 @@ export default function OverviewPage() {
             </span>
           </div>
           {ups.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No upward moves since yesterday.</p>
+            <p className="text-sm text-muted-foreground">Nothing went up since yesterday.</p>
           ) : (
             <ul className="space-y-1">
               {ups.map((m) => (
@@ -105,7 +105,7 @@ export default function OverviewPage() {
         </section>
 
         <section className="glass flex flex-col items-center justify-center rounded-[1.5rem] px-5 py-6 lg:col-span-2">
-          <h2 className="self-start text-base font-semibold">AI rank</h2>
+          <h2 className="self-start text-base font-semibold">Are you named</h2>
           <div className="relative mt-4 flex size-40 items-center justify-center">
             <svg viewBox="0 0 120 70" className="absolute inset-x-0 top-2 w-full">
               <path
@@ -126,11 +126,11 @@ export default function OverviewPage() {
             </svg>
             <div className="mt-4 text-center">
               <p className="text-3xl font-semibold text-blue">{namedPct}%</p>
-              <p className="text-xs text-muted-foreground">named this run</p>
+              <p className="text-xs text-muted-foreground">named this check</p>
             </div>
           </div>
           <p className="mt-2 rounded-full bg-indigo/15 px-3 py-1 text-[12px] font-medium text-blue">
-            {named} of {visiblePrompts.length} prompts
+            {named} of {visiblePrompts.length} questions
           </p>
         </section>
       </div>
@@ -168,7 +168,7 @@ export default function OverviewPage() {
 
         <section className="glass rounded-[1.5rem] px-5 py-5">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-base font-semibold">AI questions</h2>
+            <h2 className="text-base font-semibold">Questions people ask ChatGPT</h2>
             <Link href="/ai-visibility" className="text-xs font-medium text-blue">
               Open
             </Link>

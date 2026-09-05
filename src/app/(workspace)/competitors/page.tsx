@@ -9,15 +9,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWorkspace } from "@/lib/workspace-context";
 
 const sourceLabel = {
-  selected: "You selected",
-  search: "Discovered in search",
-  ai: "Discovered in AI answers",
+  selected: "You picked",
+  search: "Found on Google",
+  ai: "Found in ChatGPT answers",
 };
 
 export default function CompetitorsPage() {
   const { loading, limits, visibleRivals, lockedRivalCount, usingDemo } = useWorkspace();
   if (loading) {
-    return <PageSkeleton label="Loading competitors…" />;
+    return <PageSkeleton label="Loading rivals…" />;
   }
 
   return (
@@ -29,10 +29,10 @@ export default function CompetitorsPage() {
         title={limits.rivals === 1 ? "The one rival we watch" : "Who buyers see instead of you"}
         description={
           limits.rivals === 1
-            ? "Look watches a single competitor. We do not map the gap or tell you how to close it."
+            ? "Look watches one rival. We do not explain the gap or tell you how to close it."
             : limits.howTo
-              ? "Why they win, and what to do about the gaps."
-              : "Who is ahead, and on which keywords and prompts. Not how to beat them."
+              ? "Why they win, and what to do about it."
+              : "Who is ahead, and on which searches and ChatGPT questions. Not how to beat them."
         }
       />
 
@@ -65,21 +65,21 @@ export default function CompetitorsPage() {
                 <p className="text-[15px] leading-relaxed">{c.why}</p>
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  They show up next to you. Watch explains the gap. Fix is the call.
+                  They show up next to you. Watch explains why. Fix is the call.
                 </p>
               )}
               {limits.diagnosis ? (
                 <dl className="grid grid-cols-3 gap-3 text-sm">
                   <div className="rounded-lg bg-muted/70 px-3 py-2">
-                    <dt className="text-xs text-muted-foreground">Keyword gap</dt>
+                    <dt className="text-xs text-muted-foreground">Searches they win</dt>
                     <dd className="font-heading text-2xl">{c.keywordGap}</dd>
                   </div>
                   <div className="rounded-lg bg-muted/70 px-3 py-2">
-                    <dt className="text-xs text-muted-foreground">Prompt gap</dt>
+                    <dt className="text-xs text-muted-foreground">ChatGPT they win</dt>
                     <dd className="font-heading text-2xl">{c.promptGap}</dd>
                   </div>
                   <div className="rounded-lg bg-muted/70 px-3 py-2">
-                    <dt className="text-xs text-muted-foreground">Source gap</dt>
+                    <dt className="text-xs text-muted-foreground">Sites that name them</dt>
                     <dd className="font-heading text-2xl">{c.sourceGap}</dd>
                   </div>
                 </dl>

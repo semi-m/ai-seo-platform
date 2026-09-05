@@ -31,6 +31,6 @@ export function formatDelta(n: number, suffix = "%"): string {
 }
 
 export function positionLabel(position: number | null): string {
-  if (position === null) return "Not ranking";
+  if (position === null) return "Not showing up";
   return `#${position}`;
 }

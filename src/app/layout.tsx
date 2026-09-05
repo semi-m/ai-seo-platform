@@ -20,9 +20,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Lyra — Daily SEO, with a weekly progress document",
+  title: "Lyra — See if Google and ChatGPT name you",
   description:
-    "Look at your site every day. Free monitors rankings, one rival, and three AI prompts. Pay for the weekly document and what to fix. Enterprise shows you how.",
+    "Look at your website every day. We watch Google, ChatGPT, one rival, and visits. Pay to know what is broken. Call us to fix it.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

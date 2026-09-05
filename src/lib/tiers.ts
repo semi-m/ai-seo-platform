@@ -10,7 +10,7 @@ export type Plan = {
   notIncluded: string[];
 };
 
-/** Free watches. Paid diagnoses. Enterprise shows you how — on a call. */
+/** Look watches. Watch names what is broken. Fix shows you how — on a call. */
 export const plans: Plan[] = [
   {
     id: "free",
@@ -18,18 +18,18 @@ export const plans: Plan[] = [
     price: "Free",
     cadence: "Every day",
     promise:
-      "Look at your website. We find the keywords you already rank for, watch one rival, check daily visits, and score you on three AI prompts. If you go up, we email you. We do not tell you what to fix.",
+      "Look at your website. We find the searches you already show up for, watch one rival, check daily visits, and ask ChatGPT three questions. If you go up, we email you. We do not tell you what to fix.",
     includes: [
       "Your website pages",
-      "Keywords you already rank for",
+      "Searches you already show up for",
       "One rival",
-      "Daily analytics snapshot",
-      "AI rank on 3 prompts",
-      "Email when a ranking goes up",
+      "Yesterday’s visits",
+      "Named on 3 ChatGPT questions",
+      "Email when you go up",
     ],
     notIncluded: [
-      "Keywords you should go after",
-      "Weekly progress document",
+      "Searches you should go after",
+      "Monday write-up",
       "What to fix",
       "How to fix it",
     ],
@@ -38,18 +38,18 @@ export const plans: Plan[] = [
     id: "pro",
     name: "Watch",
     price: "Monthly",
-    cadence: "Every day + Monday document",
+    cadence: "Every day + Monday write-up",
     promise:
-      "Daily monitoring plus a weekly progress document. We tell you what is broken and where you are losing. We do not show you how to fix it.",
+      "We watch every day, plus a Monday write-up. We tell you what is broken and where you are losing. We do not show you how to fix it.",
     includes: [
       "Everything in Look",
-      "Daily monitoring of rankings, AI, and traffic",
-      "Weekly progress document",
-      "AI rank on 5 prompts",
-      "Slipping terms and keyword gaps",
+      "We watch Google, ChatGPT, and visits every day",
+      "Monday write-up",
+      "Named on 5 ChatGPT questions",
+      "Searches that slipped, and searches you should go after",
       "More than one rival",
-      "What you should fix — diagnosis only",
-      "Site issues that hide you: what is wrong, not how to repair it",
+      "What you should fix — not how",
+      "What is broken on your site — not how to repair it",
     ],
     notIncluded: ["How to fix it", "A working session with us"],
   },
@@ -59,12 +59,12 @@ export const plans: Plan[] = [
     price: "Talk to us",
     cadence: "The tool + a call",
     promise:
-      "You use the same product. We get on a call and show you how to fix it — pages, citations, schema, the lot.",
+      "You use the same product. We get on a call and show you how to fix it — pages, getting named, the lot.",
     includes: [
       "Everything in Watch",
-      "Full prompt set, not a cap of five",
+      "Every ChatGPT question we ask, not a cap of five",
       "How to fix each issue",
-      "Playbooks for pages, citations, and site health",
+      "Step-by-step for pages, getting named, and what is broken on the site",
       "A working session with us",
     ],
     notIncluded: [],
