@@ -9,7 +9,7 @@ export const dataRules = [
   },
   {
     title: "We send vendors as little as possible",
-    body: "Google gets OAuth to read Search Console. DataForSEO gets keywords, not your inbox. OpenAI/Perplexity get the buyer questions we already chose — not your full analytics dump.",
+    body: "Google gets OAuth to read Search Console. DataForSEO gets keywords, not your inbox. OpenAI and Gemini get the buyer questions we already chose — not your full analytics dump.",
   },
   {
     title: "Language models do not get raw customer lists",

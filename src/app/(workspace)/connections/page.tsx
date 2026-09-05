@@ -15,7 +15,7 @@ export default function ConnectionsPage() {
       <PageHeader
         eyebrow="Connect"
         title="The stack — plus a spare brain"
-        description="Google, ChatGPT, Perplexity, rankings, our crawl, and OpenRouter so a vendor outage does not kill the Monday note. Keys never go in the public GitHub repo."
+        description="Google, ChatGPT, Gemini, rankings, our crawl, and OpenRouter. No Perplexity — citations come from ChatGPT, Gemini, and Google AI Overviews. Keys never go in the public GitHub repo."
       />
 
       {usingDemo ? (

@@ -28,7 +28,7 @@ Connect only what feeds the model. Copy `.env.example` when you go live.
 | Your Google Search | Google Search Console | Real queries and clicks. Free. Connect first. |
 | ChatGPT answers | OpenAI (official API) | Are you named in ChatGPT answers? |
 | Spare AI writer | OpenRouter | If OpenAI is down, still write/parse via other models. Not a ChatGPT.com backup. |
-| AI citations | Perplexity | Which sites AI cites — the list you can actually get on. |
+| AI citations | ChatGPT + Gemini + DataForSEO AI Overviews | No Perplexity. Paid API skipped on purpose. |
 | Google rankings | DataForSEO | Demand + position. Pay per check, no $500/mo seat. |
 | Your website | Built-in crawl | Broken pages and missing proof. No third-party API. |
 | Who visits | GA4 (optional) | Did ChatGPT send anyone? |
