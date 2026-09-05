@@ -8,6 +8,7 @@ import {
   Compass,
   Eye,
   ListChecks,
+  Lock,
   Menu,
   Search,
   ShieldAlert,
@@ -77,10 +78,16 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           })}
         </div>
       </div>
-      <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
-        <Cable className="size-4" />
-        Connect
-      </Link>
+      <div className="flex flex-col gap-0.5">
+        <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
+          <Cable className="size-4" />
+          Connect
+        </Link>
+        <Link href="/privacy" onClick={onNavigate} className={linkClass("/privacy")}>
+          <Lock className="size-4" />
+          Your data
+        </Link>
+      </div>
     </nav>
   );
 }

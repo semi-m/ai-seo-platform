@@ -14,8 +14,8 @@ export default function ConnectionsPage() {
     <div>
       <PageHeader
         eyebrow="Connect"
-        title="Four connections. That is the whole stack."
-        description="A founder should not buy Semrush, Ahrefs, and an AI tracker. Connect these, and Atlas can replace the sample report with your numbers."
+        title="The stack — plus a spare brain"
+        description="Google, ChatGPT, Perplexity, rankings, our crawl, and OpenRouter so a vendor outage does not kill the Monday note. Keys never go in the public GitHub repo."
       />
 
       {usingDemo ? (

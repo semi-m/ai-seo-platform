@@ -60,6 +60,17 @@ export const integrations: Integration[] = [
     cost: "Pay as you go (~$50 to start)",
   },
   {
+    id: "openrouter",
+    name: "OpenRouter",
+    founderName: "Spare AI writer",
+    why: "One key, many models. If OpenAI is down, we still write the Monday note and parse answers via Claude or Gemini. Not a replacement for measuring ChatGPT.",
+    withoutIt: "If OpenAI’s chat API dies, the pretty paragraph dies. The action list still works from saved numbers.",
+    envVars: ["OPENROUTER_API_KEY"],
+    auth: "api-key",
+    tier: "required",
+    cost: "Pay per call, pick cheap fallbacks",
+  },
+  {
     id: "gemini",
     name: "Google Gemini",
     founderName: "Gemini & AI Overviews",
