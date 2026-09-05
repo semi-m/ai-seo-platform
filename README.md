@@ -29,7 +29,9 @@ Connect only what feeds the model. Copy `.env.example` when you go live.
 | ChatGPT answers | OpenAI (official API) | Are you named in ChatGPT answers? |
 | Spare AI writer | OpenRouter | If OpenAI is down, still write/parse via other models. Not a ChatGPT.com backup. |
 | AI citations | ChatGPT + Gemini | No Perplexity. |
-| Google rankings | Search Console + Serper | GSC is free and exact for you. Serper: 2,500 free SERPs, then cheap. |
+| Google rankings | Search Console + Serper | GSC for you. Serper 2,500 free SERPs for new terms and rivals. |
+| Your backlinks | Bing Webmaster (optional) | Free, verified sites only. |
+| Research search | Tavily / Brave (optional) | Free credits. Not a rank tracker. |
 | Your website | Built-in crawl | Broken pages and missing proof. No third-party API. |
 | Who visits | GA4 (optional) | Did ChatGPT send anyone? |
 | Gemini | Gemini API (optional) | Google’s AI answers. |
