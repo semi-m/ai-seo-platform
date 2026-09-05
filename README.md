@@ -43,7 +43,7 @@ Connect only what feeds the model. Copy `.env.example` when you go live.
 
 **Do not add for V1:** Perplexity, DataForSEO, Ahrefs API, Semrush, Meta Pixel, scraping ChatGPT’s website.
 
-Live keys plug in through `src/lib/providers.ts`. Until then the UI uses a sample workspace.
+Live keys plug in through `src/lib/providers.ts`. Until then the UI uses a sample workspace. The full stack list lives in `src/lib/integrations.ts` — it is not a product room.
 
 ## Data protection
 

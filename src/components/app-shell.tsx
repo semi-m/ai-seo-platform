@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
-  Cable,
   Compass,
   Eye,
   FileText,
@@ -91,10 +90,6 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
         <Link href="/plans" onClick={onNavigate} className={linkClass("/plans")}>
           <Tags className="size-4" />
           Plans
-        </Link>
-        <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
-          <Cable className="size-4" />
-          Connect
         </Link>
       </div>
     </nav>

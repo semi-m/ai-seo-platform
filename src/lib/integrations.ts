@@ -13,7 +13,7 @@ export type Integration = {
   cost: string;
 };
 
-/** Only APIs that feed the discoverability model. Nothing for ads or CRM. */
+/** Engine / env stack for later live fetches. Not a customer product screen. */
 export const integrations: Integration[] = [
   {
     id: "gsc",
