@@ -15,7 +15,7 @@ export default function ConnectionsPage() {
       <PageHeader
         eyebrow="Connect"
         title="The stack — plus a spare brain"
-        description="Free Google Search Console is the rank tracker. ChatGPT, Gemini, our crawl, OpenRouter. No DataForSEO or Perplexity bills. Keys never go in the public GitHub repo."
+        description="Search Console for your real queries. Serper (2,500 free) to check Google for new terms and rivals. ChatGPT, Gemini, crawl, OpenRouter. No DataForSEO."
       />
 
       {usingDemo ? (

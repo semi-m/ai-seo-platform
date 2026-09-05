@@ -178,7 +178,7 @@ export type Workspace = {
   pages: ContentPage[];
 };
 
-export type ProviderName = "demo" | "search-console" | "dataforseo" | "llm";
+export type ProviderName = "demo" | "search-console" | "serper" | "llm";
 
 export type DiscoverabilityProvider = {
   name: ProviderName;
