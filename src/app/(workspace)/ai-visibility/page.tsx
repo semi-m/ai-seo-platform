@@ -29,7 +29,7 @@ export default function AiVisibilityPage() {
       <PageHeader
         eyebrow="ChatGPT & AI"
         title={`AI does not name you on ${missing.length} buyer questions`}
-        description="We ask ChatGPT and Gemini the same questions three times, plus Google AI Overviews. Mention = they said your name. Citation = they linked you. Those are not the same thing."
+        description="We ask ChatGPT and Gemini the same questions three times. Mention = they said your name. Citation = they linked you. Those are not the same thing."
       />
 
       <section className="mb-6 grid gap-3 sm:grid-cols-3">
