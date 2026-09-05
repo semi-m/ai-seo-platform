@@ -138,7 +138,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="sm:pl-[16.5rem]">
-        <header className="sticky top-3 z-30 mx-3 flex items-center gap-3 rounded-full px-3 py-1.5 glass">
+        <header className="sticky top-3 z-30 mx-3 flex items-center gap-3 overflow-visible rounded-full px-3 py-1.5 glass">
           <button
             type="button"
             onClick={() => setOpen(true)}
