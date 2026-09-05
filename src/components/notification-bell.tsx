@@ -8,9 +8,14 @@ import { useWorkspace } from "@/lib/workspace-context";
 export function NotificationBell() {
   const { workspace } = useWorkspace();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [coords, setCoords] = useState({ top: 0, right: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const ups = workspace.daily.movers.filter((m) => m.direction === "up");
   const downs = workspace.daily.movers.filter((m) => m.direction === "down");
   const count = ups.length;
@@ -70,7 +75,7 @@ export function NotificationBell() {
           </span>
         ) : null}
       </button>
-      {open
+      {open && mounted
         ? createPortal(
             <div
               ref={panelRef}
