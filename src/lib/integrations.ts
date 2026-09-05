@@ -120,7 +120,6 @@ export const skipIntegrations = [
   "DataForSEO / Semrush / Ahrefs — paid indexes. Search Console is free and more accurate for your site",
   "Perplexity API — paid; citations come from ChatGPT and Gemini instead",
   "Meta Pixel — ads, not discoverability",
-  "Semrush or Ahrefs API — $450+/mo seats; add Ahrefs later only for links",
   "Scraping ChatGPT in a browser — breaks their terms; use official APIs",
   "Similarweb-style rival traffic — mostly guesswork",
   "HubSpot / Salesforce — after the weekly action loop works",

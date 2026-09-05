@@ -28,9 +28,9 @@ export default function PrivacyPage() {
 
       <p className="mt-8 text-sm text-muted-foreground">
         OpenRouter is only the spare writer. Measuring ChatGPT uses OpenAI’s
-        official API. Citations come from ChatGPT, Gemini, and Google AI
-        Overviews — not a paid Perplexity plan. We do not scrape consumer apps
-        and we do not put secrets in the public repo.
+        official API. Citations come from ChatGPT and Gemini — not paid
+        Perplexity or DataForSEO. We do not scrape consumer apps and we do
+        not put secrets in the public repo.
       </p>
     </div>
   );
