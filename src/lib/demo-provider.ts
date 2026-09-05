@@ -15,7 +15,7 @@ export const demoWorkspace: Workspace = {
     checkedAt: "Today, 7:40",
     visits: 842,
     visitsDelta: 3,
-    emailPromise: "If a keyword you already rank for goes up, we email you. That is the free alert. Nothing else.",
+    emailPromise: "If a search you already show up for goes up, we email you. That is the free alert. Nothing else.",
     lastEmail: {
       sent: "Yesterday, 18:12",
       subject: "northline.ai went up: “ai automation agency belgium” #4 → #3",
@@ -31,17 +31,17 @@ export const demoWorkspace: Workspace = {
     headline:
       "You went up in AI on automation. You went down on three money pages in Google. Adaforge took more of the commercial answers.",
     wins: [
-      "/ai-automation is now named in eight ChatGPT and Gemini clusters.",
+      "/ai-automation is now named in eight ChatGPT and Gemini answers.",
       "“ai automation agency belgium” moved 4 → 3.",
       "“custom llm development” climbed 18 → 12 over the week.",
     ],
     losses: [
-      "Organic visits −7% — three service pages lost Google positions.",
+      "Visits from Google −7% — three money pages dropped.",
       "“software development company brussels” moved 8 → 19.",
       "“ai consulting netherlands” moved 11 → 22.",
     ],
     rivalMove:
-      "Adaforge gained AI share after new mentions on Clutch and a “best AI agencies” roundup. They now win 27 high-intent prompts where you are absent.",
+      "Adaforge got named more after Clutch and a “best AI agencies” list. They now win 27 ChatGPT questions where you are missing.",
     toFix: [
       {
         id: "r-1",
@@ -105,9 +105,9 @@ export const demoWorkspace: Workspace = {
   },
   channels: [
     { name: "Google", visits: 18420, delta: -6, share: 58 },
-    { name: "AI referrals", visits: 1482, delta: 34, share: 5 },
-    { name: "Direct", visits: 6210, delta: 3, share: 19 },
-    { name: "Referral", visits: 2890, delta: 8, share: 9 },
+    { name: "ChatGPT", visits: 1482, delta: 34, share: 5 },
+    { name: "Typed your site", visits: 6210, delta: 3, share: 19 },
+    { name: "Other websites", visits: 2890, delta: 8, share: 9 },
     { name: "LinkedIn", visits: 1710, delta: -2, share: 5 },
     { name: "Email", visits: 1240, delta: 1, share: 4 },
   ],
@@ -324,6 +324,18 @@ export const demoWorkspace: Workspace = {
         "Category language on /ai-development is too generic",
       ],
       sources: ["clutch.co", "topaiagencies.com", "gartner.com"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: false,
+          text: "If you need a team to build an AI SaaS product in Europe, a few names come up often. Adaforge is frequently recommended for end-to-end product work. Stackwright is known for shipping LLM features inside existing SaaS tools. Helix Labs is a strong pick if you want a studio with more research-heavy work. Look for a team that has shipped a live product, not just a demo.",
+        },
+        {
+          engine: "Gemini",
+          named: false,
+          text: "For a European AI SaaS build, buyers often shortlist Adaforge and Stackwright. Helix Labs also appears in Dutch and Nordic roundups. There is no single best agency — pick based on your stack and whether you need a full product team or a smaller specialist.",
+        },
+      ],
     },
     {
       id: "p-2",
@@ -341,10 +353,22 @@ export const demoWorkspace: Workspace = {
       },
       competitorsPresent: ["Adaforge", "Helix Labs"],
       blockers: [
-        "Mentioned once without a citation",
+        "Said your name once. Did not link to you.",
         "Page lacks proof: case studies, stack, delivery model",
       ],
       sources: ["helixlabs.io/work", "adaforge.com/case-studies"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: true,
+          text: "For a B2B SaaS AI product, you want a studio that has shipped real features, not a slide deck. Adaforge is a common pick for larger builds. Northline is a smaller European team that does AI product work and operations automation. Helix Labs is another option if you want more research-led delivery. Ask each for a case study in your category before you sign.",
+        },
+        {
+          engine: "Gemini",
+          named: false,
+          text: "Hire a product studio that can own discovery, the model layer, and the first release. Adaforge and Helix Labs are the names that show up most for B2B SaaS. Ask for a working prototype timeline and who stays after launch. A boutique shop can work if they have shipped something similar.",
+        },
+      ],
     },
     {
       id: "p-3",
@@ -363,6 +387,18 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Velora"],
       blockers: [],
       sources: ["northline.ai/ai-automation", "clutch.co"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: true,
+          text: "For AI automation in Belgium, Northline is the agency that comes up first. They sit in Brussels and work on operations automation and custom AI builds. Velora is a local software firm that also does some automation work. If you want a Belgian team that already speaks the operations use case, start with Northline.",
+        },
+        {
+          engine: "Gemini",
+          named: true,
+          text: "Northline is a Belgian AI studio that is often named for automation projects. Velora appears as a more general software partner. For ops workflows — invoicing, intake, internal tools — Northline is the clearer match.",
+        },
+      ],
     },
     {
       id: "p-4",
@@ -379,8 +415,20 @@ export const demoWorkspace: Workspace = {
         gemini: { mentionRate: 0.33, citationRate: 0.33 },
       },
       competitorsPresent: ["Helix Labs"],
-      blockers: ["Cited on Perplexity, rarely linked from ChatGPT"],
+      blockers: ["Perplexity linked to you. ChatGPT almost never does."],
       sources: ["northline.ai/llm-development", "openai.com"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: true,
+          text: "Most companies add LLM features in three steps: pick one workflow, wrap a model behind a thin API, then add evaluation so the answers stay safe. Northline writes about this on their LLM development page — discovery, a thin layer, then a first feature in production. Helix Labs publishes similar guidance. Avoid a big rewrite of the whole product.",
+        },
+        {
+          engine: "Gemini",
+          named: true,
+          text: "You do not need to rebuild the product. Add a model behind one job: search, summaries, or a support draft. Helix Labs has a clear write-up of this pattern. A few European studios, including Northline, walk the same path: one workflow first, then a wider rollout.",
+        },
+      ],
     },
     {
       id: "p-5",
@@ -399,9 +447,21 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Helix Labs", "Velora"],
       blockers: [
         "Weak Dutch-market proof and no Amsterdam-specific page",
-        "Absent from Dutch directories cited by Gemini and Perplexity",
+        "Missing from Dutch lists that Gemini and Perplexity use.",
       ],
       sources: ["emerce.nl", "mt.nl", "helixlabs.io"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: false,
+          text: "In the Netherlands, Helix Labs is the studio most people name for AI product work. Velora shows up more on general software lists. Dutch buyers often look at Emerce write-ups and local case studies. There is not a long list of well-known AI studios in Amsterdam yet.",
+        },
+        {
+          engine: "Gemini",
+          named: false,
+          text: "Helix Labs is the name that comes up for Dutch AI product studios. They have Amsterdam case studies and appear in local press. Velora is mentioned less often. If you need a Netherlands-based team, start with Helix Labs and ask for a local reference.",
+        },
+      ],
     },
     {
       id: "p-6",
@@ -420,6 +480,18 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Adaforge", "Stackwright"],
       blockers: ["No comparison or alternative page exists"],
       sources: ["adaforge.com", "g2.com"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: false,
+          text: "Adaforge is the larger, better-known option. Boutique shops such as Stackwright compete on speed and a tighter senior team. Adaforge wins when you want a long engagement and a bigger bench. A boutique shop wins when you want a small team that stays close to the product. There is no public head-to-head that names many other European studios.",
+        },
+        {
+          engine: "Gemini",
+          named: false,
+          text: "Adaforge is usually the default on this comparison. Stackwright is the boutique name that comes up next. Reviews on G2 lean toward Adaforge for bigger SaaS builds. Smaller agencies rarely appear in these answers unless they have a comparison page of their own.",
+        },
+      ],
     },
     {
       id: "p-7",
@@ -438,6 +510,18 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Stackwright"],
       blockers: [],
       sources: ["northline.ai/engagements"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: true,
+          text: "A typical AI development engagement includes discovery, a scoped first feature, the model and data work, and a handoff so your team can run it. Northline describes this as a fixed first slice — not an open-ended AI project. Stackwright uses a similar shape. Ask what is in the first eight weeks and what is not.",
+        },
+        {
+          engine: "Gemini",
+          named: true,
+          text: "Most studios sell a discovery month, then a build. Northline’s engagement page lists discovery, a first production feature, and a handoff. Stackwright talks about a similar path. The useful question is who owns the model after you go live.",
+        },
+      ],
     },
     {
       id: "p-8",
@@ -456,6 +540,18 @@ export const demoWorkspace: Workspace = {
       competitorsPresent: ["Adaforge"],
       blockers: ["ChatGPT does not recommend Northline on this cluster"],
       sources: ["northline.ai/ai-automation", "forbes.com"],
+      answers: [
+        {
+          engine: "ChatGPT",
+          named: false,
+          text: "For operations automation, Adaforge is the agency that shows up most in these lists. They have case studies on intake and back-office work. A few US consultancies appear as well. If you want a team that has shipped ops automation, start with Adaforge and ask for a similar industry example.",
+        },
+        {
+          engine: "Gemini",
+          named: true,
+          text: "Adaforge is often recommended for larger automation programs. Northline is a smaller European option that focuses on operations automation and shows up for that use case. Pick based on whether you want a big bench or a tighter studio.",
+        },
+      ],
     },
   ],
   engines: [
@@ -497,7 +593,7 @@ export const demoWorkspace: Workspace = {
       promptGap: 27,
       sourceGap: 14,
       momentum: "Gaining fastest this week",
-      why: "They rank for 418 relevant keywords you do not. They appear in 27 high-intent AI prompts where you are absent. Fourteen third-party sources repeatedly cited by AI mention them but not you — including Clutch and a new “best AI agencies” roundup.",
+      why: "They show up for 418 searches you do not. They appear in 27 ChatGPT questions where you are missing. Fourteen sites ChatGPT already uses name them but not you — including Clutch and a new “best AI agencies” list.",
     },
     {
       id: "c-2",
@@ -508,7 +604,7 @@ export const demoWorkspace: Workspace = {
       promptGap: 11,
       sourceGap: 6,
       momentum: "Steady in NL",
-      why: "They own Dutch-market commercial prompts and two Amsterdam case studies that Gemini cites. Search overlap is smaller than Adaforge, but they win the Netherlands.",
+      why: "They win Dutch buying questions and two Amsterdam case studies that Gemini uses. They overlap less on Google than Adaforge, but they win the Netherlands.",
     },
     {
       id: "c-3",
@@ -518,8 +614,8 @@ export const demoWorkspace: Workspace = {
       keywordGap: 74,
       promptGap: 4,
       sourceGap: 3,
-      momentum: "Local search rival",
-      why: "Discovered from Belgian keyword overlap. They beat you on “software development company Brussels” after a site refresh last month.",
+      momentum: "Local Google rival",
+      why: "We found them next to you on Belgian searches. They beat you on “software development company Brussels” after a site refresh last month.",
     },
     {
       id: "c-4",
@@ -529,8 +625,8 @@ export const demoWorkspace: Workspace = {
       keywordGap: 52,
       promptGap: 9,
       sourceGap: 5,
-      momentum: "AI-only rival",
-      why: "You did not list them. ChatGPT and Perplexity recommend them on SaaS-build prompts because they are cited on G2 and two engineering blogs.",
+      momentum: "Named in ChatGPT, not Google",
+      why: "You did not list them. ChatGPT and Perplexity recommend them for SaaS builds because G2 and two engineering blogs name them.",
     },
   ],
   sources: [
@@ -578,15 +674,15 @@ export const demoWorkspace: Workspace = {
   recommendations: [
     {
       id: "r-1",
-      problem: "No coverage for “AI SaaS development” — 8.4K searches, you do not rank",
-      howTo: "Create a dedicated /ai-saas-development page. Do not stretch /ai-development — it does not name the SaaS use case.",
+      problem: "No page for “AI SaaS development” — 8.4K searches, you do not show up",
+      howTo: "Create a /ai-saas-development page. Do not stretch /ai-development — it does not name the SaaS offer.",
       reason:
-        "8.4K monthly search demand and 34 relevant AI prompts in this cluster. You do not rank, and Adaforge + Stackwright own the answers.",
+        "8.4K people a month type this. ChatGPT also gets asked about it. You do not show up. Adaforge and Stackwright own the answers.",
       why: [
-        "Keyword “ai saas development” has 8.4K volume and no ranking URL.",
-        "Prompt cluster “AI SaaS” is 0% mention rate across 3 engines × 3 samples.",
-        "Clutch and topaiagencies.com — sources cited by all three engines — omit Northline.",
-        "Improving /ai-development is not enough: the page does not name the SaaS use case.",
+        "“ai saas development” gets 8.4K searches a month and you have no page.",
+        "On “AI SaaS” questions, ChatGPT, Gemini, and Perplexity never say your name.",
+        "Clutch and topaiagencies.com — sites all three already use — leave Northline out.",
+        "Fixing /ai-development is not enough: the page does not name the SaaS offer.",
       ],
       impact: "very-high",
       impactLabel: "Very high impact",
@@ -608,14 +704,14 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-2",
-      problem: "You are missing from Clutch and the 2026 agency roundup that AI cites",
-      howTo: "Get listed on Clutch and request inclusion on the 2026 agency roundup. Those two sources move ChatGPT recommendations in this category.",
+      problem: "You are missing from Clutch and the 2026 agency list ChatGPT uses",
+      howTo: "Get listed on Clutch and ask to be on the 2026 agency list. Those two sites change who ChatGPT names.",
       reason:
-        "These two sources are cited across the high-intent prompts where you are absent. This is a citation gap, not a backlink vanity play.",
+        "ChatGPT already uses these two sites on questions where you are missing. Get named there. Do not chase random links.",
       why: [
-        "clutch.co is cited by ChatGPT, Perplexity, and Gemini for commercial agency prompts.",
+        "ChatGPT, Perplexity, and Gemini use clutch.co when people ask who to hire.",
         "Adaforge and Helix Labs are listed; Northline is not.",
-        "topaiagencies.com entered the citation set this month and already moves ChatGPT recommendations.",
+        "topaiagencies.com showed up this month and already changes who ChatGPT names.",
       ],
       impact: "high",
       impactLabel: "High impact",
@@ -636,13 +732,13 @@ export const demoWorkspace: Workspace = {
     {
       id: "r-3",
       problem: "/software-development lost 14 positions on Belgian and Dutch terms",
-      howTo: "Refresh /software-development with case studies, schema, and NL-specific proof. Do not replace the URL.",
+      howTo: "Refresh /software-development with case studies and Dutch proof. Keep the same page. Do not make a new one.",
       reason:
-        "Lost 14 ranking positions on Belgian and Dutch terms. The same page is weak in AI prompt coverage for consulting queries.",
+        "Lost 14 spots on Belgian and Dutch searches. ChatGPT also rarely names you for consulting questions.",
       why: [
         "“software development company brussels” moved 8 → 19.",
         "“ai consulting netherlands” moved 11 → 22.",
-        "Page has no case studies, no schema, and no NL-specific proof.",
+        "Page has no case studies and no Dutch proof.",
       ],
       impact: "high",
       impactLabel: "High impact",
@@ -665,12 +761,12 @@ export const demoWorkspace: Workspace = {
     {
       id: "r-4",
       problem: "Eight sites that already link to three or more rivals do not mention you",
-      howTo: "Pursue those eight competitor-linking domains. Three of them are already in the AI citation set — start there.",
+      howTo: "Get named on those eight sites. Three of them are sites ChatGPT already uses — start there.",
       reason:
-        "These are reachable authority gaps tied to pages AI already treats as category sources.",
+        "These sites already name your rivals. ChatGPT already treats some of them as places to look.",
       why: [
-        "Gap set is competitor-linking domains, not a raw backlink count.",
-        "Three of the eight domains are already in the AI citation set.",
+        "These are sites that already name rivals — not a raw link count.",
+        "Three of the eight are sites ChatGPT already uses.",
       ],
       impact: "medium",
       impactLabel: "Medium impact",
@@ -690,13 +786,13 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-5",
-      problem: "12 priority pages have no Service schema — machines cannot map you to the category",
-      howTo: "Add Organization + Service JSON-LD on the 12 money pages, naming each offer and the markets you serve.",
+      problem: "12 money pages do not tell Google what you sell",
+      howTo: "On each of the 12 pages, name the offer and the countries you serve in plain words Google can read.",
       reason:
-        "Crawlability is fine; machines still cannot map Northline to the category being asked about.",
+        "Google can find the pages. It still cannot tell what you sell.",
       why: [
-        "12 money pages have no Service or FAQ schema.",
-        "Affects both Google rich results and how AI engines extract offerings.",
+        "12 money pages never say, in a way Google can read, what you sell.",
+        "That also makes it harder for ChatGPT to list your offers.",
       ],
       impact: "medium",
       impactLabel: "Medium impact",
@@ -719,10 +815,10 @@ export const demoWorkspace: Workspace = {
       problem: "Netherlands traffic is strong; AI almost never names you there",
       howTo: "Add Dutch-market proof and get listed on emerce.nl. Helix Labs is cited there; you are not.",
       reason:
-        "The Netherlands sends strong traffic (6.1K) but AI visibility is 38/100 versus 64 in Belgium.",
+        "The Netherlands sends 6.1K visits. ChatGPT almost never names you there. In Belgium it does.",
       why: [
-        "Zero mention rate on “Best AI development studios in the Netherlands”.",
-        "Helix Labs is cited via emerce.nl — a source you are absent from.",
+        "Never named on “Best AI development studios in the Netherlands”.",
+        "Helix Labs is named via emerce.nl — a site you are missing from.",
       ],
       impact: "high",
       impactLabel: "High impact",
@@ -746,19 +842,19 @@ export const demoWorkspace: Workspace = {
     {
       id: "h-1",
       severity: "critical",
-      title: "Canonical on /software-development points at a retired URL",
+      title: "/software-development points at an old page Google should not use",
       pages: ["/software-development"],
       keywords: [
         "software development company brussels",
         "ai consulting netherlands",
       ],
       prompts: ["Best AI development studios in the Netherlands"],
-      fix: "Point the canonical at the live URL. This page lost 14 positions and is still treated as a duplicate by Google.",
+      fix: "Point this page at the live URL. Google still treats it as a copy. It lost 14 spots.",
     },
     {
       id: "h-2",
       severity: "important",
-      title: "Missing Service schema on 12 priority pages",
+      title: "12 money pages do not tell Google what you sell",
       pages: [
         "/ai-development",
         "/ai-automation",
@@ -767,7 +863,7 @@ export const demoWorkspace: Workspace = {
       ],
       keywords: ["ai development agency", "custom llm development"],
       prompts: ["Who should I hire to build an AI product for a B2B SaaS?"],
-      fix: "Add Organization + Service JSON-LD that names each offer and the markets you serve.",
+      fix: "On each page, name the offer and the countries you serve in plain words Google can read.",
     },
     {
       id: "h-3",
@@ -776,12 +872,12 @@ export const demoWorkspace: Workspace = {
       pages: ["/ai-development"],
       keywords: ["ai development agency", "gpt integration agency"],
       prompts: ["Who should I hire to build an AI product for a B2B SaaS?"],
-      fix: "Add two case studies, stack, and delivery model. AI mentions the brand but will not cite a generic page.",
+      fix: "Add two case studies, the tools you use, and how you work. ChatGPT may say your name, but it will not link a thin page.",
     },
     {
       id: "h-4",
       severity: "improvement",
-      title: "Internal links from blog posts skip /ai-automation",
+      title: "Blog posts do not point people to /ai-automation",
       pages: ["/journal/ops-automation", "/ai-automation"],
       keywords: ["ai automation agency belgium"],
       prompts: ["Recommended agencies for AI automation in operations"],
@@ -795,7 +891,7 @@ export const demoWorkspace: Workspace = {
       bucket: "growing",
       traffic: 2140,
       trafficDelta: 18,
-      note: "Now cited in eight ChatGPT and Perplexity clusters.",
+      note: "Now named in eight ChatGPT and Perplexity answers.",
     },
     {
       path: "/ai-development",
@@ -803,7 +899,7 @@ export const demoWorkspace: Workspace = {
       bucket: "underperforming",
       traffic: 1680,
       trafficDelta: -4,
-      note: "Should own the agency term. Too generic for SaaS prompts.",
+      note: "Should own the agency search. Too generic for SaaS questions.",
     },
     {
       path: "/software-development",
@@ -827,7 +923,7 @@ export const demoWorkspace: Workspace = {
       bucket: "missing",
       traffic: 0,
       trafficDelta: 0,
-      note: "Highest-demand topic with no URL.",
+      note: "People search this a lot. You have no page.",
     },
   ],
 };

@@ -56,6 +56,12 @@ export type EngineSample = {
   citationRate: number;
 };
 
+export type PromptAnswer = {
+  engine: string;
+  text: string;
+  named: boolean;
+};
+
 export type Prompt = {
   id: string;
   text: string;
@@ -69,6 +75,7 @@ export type Prompt = {
   competitorsPresent: string[];
   blockers: string[];
   sources: string[];
+  answers: PromptAnswer[];
 };
 
 export type EngineScore = {
