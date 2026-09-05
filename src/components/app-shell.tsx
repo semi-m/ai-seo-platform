@@ -100,7 +100,7 @@ function BrandBlock() {
         <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
           <Compass className="size-4" />
         </span>
-        <span className="text-[15px] tracking-tight">Atlas</span>
+        <span className="text-[15px] tracking-tight">Lyra</span>
       </Link>
       <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
         {workspace.brand}
@@ -132,7 +132,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <header className="sticky top-0 z-20 flex items-center justify-between border-b border-border/80 bg-background/85 px-4 py-3 backdrop-blur lg:hidden">
           <div className="flex items-center gap-2 text-sm font-medium">
             <Compass className="size-4" />
-            Atlas
+            Lyra
           </div>
           <Button
             variant="ghost"

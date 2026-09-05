@@ -38,7 +38,7 @@ export default function OnboardingPage() {
           <Compass className="size-4" />
         </span>
         <div>
-          <p className="text-sm font-medium">Atlas</p>
+          <p className="text-sm font-medium">Lyra</p>
           <p className="text-xs text-muted-foreground">
             Step {step} of 2 · two minutes
           </p>

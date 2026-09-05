@@ -20,7 +20,7 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Atlas — Discoverability intelligence",
+  title: "Lyra — Discoverability intelligence",
   description:
     "See how a brand is found across Google and AI search, why competitors win, and what to do this week.",
 };

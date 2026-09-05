@@ -12,7 +12,7 @@ import { demoWorkspace } from "./demo-provider";
 import { integrations } from "./integrations";
 import type { RecStatus, Recommendation, Workspace } from "./types";
 
-const STORAGE_KEY = "atlas-workspace-overrides";
+const STORAGE_KEY = "lyra-workspace-overrides";
 
 type Overrides = {
   brand?: string;

@@ -38,7 +38,7 @@ export default function OverviewPage() {
       <PageHeader
         eyebrow={workspace.periodLabel}
         title={`This week, ${workspace.brand} should do three things`}
-        description="You do not need to become an SEO. Open Atlas, pick an action, do it, come back next Monday."
+        description="You do not need to become an SEO. Open Lyra, pick an action, do it, come back next Monday."
       />
 
       <section className="mb-8 rounded-2xl border border-border bg-card p-5 sm:p-6">

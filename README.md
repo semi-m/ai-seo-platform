@@ -1,4 +1,4 @@
-# Atlas — Discoverability for founders
+# Lyra — Discoverability for founders
 
 A weekly action list, not an SEO dashboard. Home asks: **what should we do this week?**
 
