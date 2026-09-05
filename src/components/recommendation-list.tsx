@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { effortLabel, impactClass } from "@/lib/format";
 import type { Recommendation } from "@/lib/types";
+import { useWorkspace } from "@/lib/workspace-context";
 import { RecommendationDrawer } from "./recommendation-drawer";
 
 export function RecommendationList({
@@ -15,6 +16,7 @@ export function RecommendationList({
   items: Recommendation[];
   empty: string;
 }) {
+  const { limits } = useWorkspace();
   const [active, setActive] = useState<Recommendation | null>(null);
 
   if (items.length === 0) {
@@ -37,18 +39,30 @@ export function RecommendationList({
                 <div className="min-w-0">
                   <p className="text-xs text-muted-foreground">#{index + 1}</p>
                   <h3 className="mt-0.5 text-base font-medium leading-snug">
-                    {rec.action}
+                    {rec.problem}
                   </h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {rec.reason}
                   </p>
+                  {limits.howTo ? (
+                    <p className="mt-2 text-sm leading-relaxed">
+                      <span className="font-medium">How: </span>
+                      {rec.howTo}
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Diagnosis only. How to fix this is on Fix.
+                    </p>
+                  )}
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     <span
                       className={`inline-flex rounded-full border px-2 py-0.5 text-xs ${impactClass(rec.impact)}`}
                     >
                       {rec.impactLabel}
                     </span>
-                    <Badge variant="outline">{effortLabel(rec.effort)}</Badge>
+                    {limits.howTo ? (
+                      <Badge variant="outline">{effortLabel(rec.effort)}</Badge>
+                    ) : null}
                     {rec.channels.map((c) => (
                       <Badge key={c} variant="secondary">
                         {c}
@@ -62,7 +76,7 @@ export function RecommendationList({
                   className="shrink-0"
                   onClick={() => setActive(rec)}
                 >
-                  Why this
+                  Evidence
                 </Button>
               </CardContent>
             </Card>

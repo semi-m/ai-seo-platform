@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,106 +9,111 @@ import { pct } from "@/lib/format";
 import { useWorkspace } from "@/lib/workspace-context";
 
 export default function AiVisibilityPage() {
-  const { workspace, loading } = useWorkspace();
-  const [cluster, setCluster] = useState<string>("all");
+  const { workspace, loading, limits, visiblePrompts, lockedPromptCount } =
+    useWorkspace();
 
   if (loading) {
     return <p className="text-sm text-muted-foreground">Loading AI visibility…</p>;
   }
 
-  const clusters = ["all", ...new Set(workspace.prompts.map((p) => p.cluster))];
-  const prompts =
-    cluster === "all"
-      ? workspace.prompts
-      : workspace.prompts.filter((p) => p.cluster === cluster);
-  const missing = workspace.prompts.filter((p) => p.mentionRate === 0);
-  const aiPillar = workspace.discoverability.pillars.find((p) => p.id === "ai");
+  const named = visiblePrompts.filter((p) => p.mentionRate > 0).length;
 
   return (
     <div>
       <PageHeader
         eyebrow="ChatGPT & AI"
-        title={`AI does not name you on ${missing.length} buyer questions`}
-        description="We ask ChatGPT and Gemini the same questions three times. Mention = they said your name. Citation = they linked you. Those are not the same thing."
+        title={
+          limits.diagnosis
+            ? `Named on ${named} of ${visiblePrompts.length} tracked prompts`
+            : `AI rank on ${visiblePrompts.length} prompts`
+        }
+        description={
+          limits.rankedKeywordsOnly && !limits.diagnosis
+            ? "Look scores three buyer questions. Mention = they said your name. We do not tell you how to show up for more."
+            : limits.howTo
+              ? "Full prompt set, blockers, and the sources to get into."
+              : "Five prompts. We show who is named. We do not write the citation playbook."
+        }
       />
 
       <section className="mb-6 grid gap-3 sm:grid-cols-3">
-        {workspace.engines.map((engine) => (
-          <Card key={engine.id}>
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <CardTitle>{engine.label}</CardTitle>
-                <span className="text-xs text-muted-foreground">
-                  {formatDelta(engine.delta)}
-                </span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="font-heading text-4xl tracking-tight">{engine.visibility}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Share of voice {engine.sov}% · mentions {pct(engine.mentionRate)} ·
-                citations {pct(engine.citationRate)}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+        {workspace.engines
+          .filter((e) => e.id !== "perplexity")
+          .map((engine) => (
+            <Card key={engine.id}>
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <CardTitle>{engine.label}</CardTitle>
+                  <span className="text-xs text-muted-foreground">
+                    {formatDelta(engine.delta)}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="font-heading text-4xl tracking-tight">{engine.visibility}</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Mentions {pct(engine.mentionRate)} · citations {pct(engine.citationRate)}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
       </section>
 
-      {aiPillar ? (
-        <p className="mb-6 text-sm text-muted-foreground">
-          Overall AI pillar {aiPillar.score}/100. {aiPillar.summary}
+      {lockedPromptCount > 0 ? (
+        <p className="mb-4 text-sm text-muted-foreground">
+          {lockedPromptCount} more prompts sit on a higher plan.{" "}
+          <Link href="/plans" className="text-primary underline-offset-4 hover:underline">
+            See plans
+          </Link>
         </p>
       ) : null}
 
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Why you are not visible</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm leading-relaxed">
-          <p>
-            The biggest reason is weak third-party authority in the sources these
-            engines actually use — not a missing H1. These five sources are the
-            best opportunities:
-          </p>
-          <ul className="space-y-2">
-            {workspace.sources
-              .filter((s) => !s.mentionsUs)
-              .map((s) => (
-                <li key={s.domain} className="rounded-lg border border-border px-3 py-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-medium">{s.domain}</span>
-                    <Badge variant="outline">Opportunity {s.opportunity}</Badge>
-                  </div>
-                  <p className="mt-1 text-muted-foreground">{s.title}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Cited by {s.citedBy.join(", ")} · mentions{" "}
-                    {s.mentionsCompetitors.join(", ")}
-                  </p>
-                </li>
-              ))}
-          </ul>
-        </CardContent>
-      </Card>
+      {limits.diagnosis && !limits.howTo ? (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>What is wrong — not how to repair it</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm leading-relaxed text-muted-foreground">
+            You are absent from prompts where rivals are named. The sources AI
+            already cites do not mention you. Watch stops there. Fix walks the
+            list on a call.
+          </CardContent>
+        </Card>
+      ) : null}
 
-      <div className="mb-3 flex flex-wrap gap-2">
-        {clusters.map((c) => (
-          <button
-            key={c}
-            type="button"
-            onClick={() => setCluster(c)}
-            className={`rounded-full border px-3 py-1 text-xs ${
-              cluster === c
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border text-muted-foreground hover:bg-accent"
-            }`}
-          >
-            {c === "all" ? "All clusters" : c}
-          </button>
-        ))}
-      </div>
+      {limits.howTo ? (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>How to show up more</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm leading-relaxed">
+            <p>
+              Get represented in the sources these engines already use. These
+              five omit you:
+            </p>
+            <ul className="space-y-2">
+              {workspace.sources
+                .filter((s) => !s.mentionsUs)
+                .map((s) => (
+                  <li key={s.domain} className="rounded-lg border border-border px-3 py-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-medium">{s.domain}</span>
+                      <Badge variant="outline">Opportunity {s.opportunity}</Badge>
+                    </div>
+                    <p className="mt-1 text-muted-foreground">{s.title}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Cited by {s.citedBy.join(", ")} · mentions{" "}
+                      {s.mentionsCompetitors.join(", ")}
+                    </p>
+                  </li>
+                ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <div className="space-y-3">
-        {prompts.map((prompt) => {
+        {visiblePrompts.map((prompt) => {
           const absent = prompt.mentionRate === 0;
           return (
             <Card key={prompt.id}>
@@ -116,42 +121,29 @@ export default function AiVisibilityPage() {
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {prompt.cluster} · {prompt.intent} · {prompt.market} ·{" "}
-                      {prompt.samples} samples
+                      {prompt.cluster} · {prompt.intent} · {prompt.market}
                     </p>
                     <h3 className="mt-1 text-base font-medium leading-snug">
                       “{prompt.text}”
                     </h3>
                   </div>
                   <Badge variant={absent ? "destructive" : "secondary"}>
-                    {absent ? "Absent" : `${pct(prompt.mentionRate)} mentioned`}
+                    {absent ? "Not named" : `${pct(prompt.mentionRate)} named`}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Citation rate {pct(prompt.citationRate)}. Competitors present:{" "}
-                  {prompt.competitorsPresent.join(", ") || "none"}.
+                  Citation {pct(prompt.citationRate)}
+                  {limits.diagnosis
+                    ? `. Also named: ${prompt.competitorsPresent.join(", ") || "nobody else"}.`
+                    : "."}
                 </p>
-                <div className="grid gap-2 text-xs sm:grid-cols-3">
-                  {Object.entries(prompt.engines).map(([engine, sample]) => (
-                    <div key={engine} className="rounded-md bg-muted/70 px-2 py-1.5">
-                      <span className="capitalize">{engine}</span>
-                      <span className="block text-muted-foreground">
-                        mention {pct(sample.mentionRate)} · cite {pct(sample.citationRate)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {prompt.blockers.length > 0 ? (
+                {limits.howTo && prompt.blockers.length > 0 ? (
                   <ul className="list-disc space-y-1 pl-5 text-sm">
                     {prompt.blockers.map((b) => (
                       <li key={b}>{b}</li>
                     ))}
                   </ul>
-                ) : (
-                  <p className="text-sm text-emerald-800">
-                    No major blockers on this prompt — protect the coverage.
-                  </p>
-                )}
+                ) : null}
               </CardContent>
             </Card>
           );

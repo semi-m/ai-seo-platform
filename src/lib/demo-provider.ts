@@ -8,9 +8,58 @@ export const demoWorkspace: Workspace = {
     "AI SaaS builds",
     "Automation for operations",
   ],
-  periodLabel: "Week of 1 Sep 2026",
+  periodLabel: "Checked today, 7:40",
   weeklyNarrative:
-    "AI visibility +11% this week because /ai-automation began appearing in eight ChatGPT and Perplexity prompt clusters. Organic traffic −7% because three service pages lost Google positions. Adaforge gained AI share after two new editorial mentions on Clutch and a “best AI agencies” roundup.",
+    "AI visibility +11% this week because /ai-automation began appearing in eight ChatGPT and Gemini prompt clusters. Organic traffic −7% because three service pages lost Google positions. Adaforge gained AI share after two new editorial mentions on Clutch and a “best AI agencies” roundup.",
+  daily: {
+    checkedAt: "Today, 7:40",
+    visits: 842,
+    visitsDelta: 3,
+    emailPromise: "If a keyword you already rank for goes up, we email you. That is the free alert. Nothing else.",
+    lastEmail: {
+      sent: "Yesterday, 18:12",
+      subject: "northline.ai went up: “ai automation agency belgium” #4 → #3",
+    },
+    movers: [
+      { term: "ai automation agency belgium", from: 4, to: 3, direction: "up" },
+      { term: "custom llm development", from: 13, to: 12, direction: "up" },
+      { term: "software development company brussels", from: 18, to: 19, direction: "down" },
+    ],
+  },
+  weeklyBrief: {
+    weekOf: "Week of 1 Sep 2026",
+    headline:
+      "You went up in AI on automation. You went down on three money pages in Google. Adaforge took more of the commercial answers.",
+    wins: [
+      "/ai-automation is now named in eight ChatGPT and Gemini clusters.",
+      "“ai automation agency belgium” moved 4 → 3.",
+      "“custom llm development” climbed 18 → 12 over the week.",
+    ],
+    losses: [
+      "Organic visits −7% — three service pages lost Google positions.",
+      "“software development company brussels” moved 8 → 19.",
+      "“ai consulting netherlands” moved 11 → 22.",
+    ],
+    rivalMove:
+      "Adaforge gained AI share after new mentions on Clutch and a “best AI agencies” roundup. They now win 27 high-intent prompts where you are absent.",
+    toFix: [
+      {
+        id: "r-1",
+        problem: "No coverage for “AI SaaS development”",
+        impact: "Very high",
+      },
+      {
+        id: "r-3",
+        problem: "/software-development lost 14 positions in BE and NL",
+        impact: "High",
+      },
+      {
+        id: "r-2",
+        problem: "AI cites Clutch and a 2026 roundup that omit you",
+        impact: "High",
+      },
+    ],
+  },
   discoverability: {
     score: 64,
     formula:
@@ -529,7 +578,8 @@ export const demoWorkspace: Workspace = {
   recommendations: [
     {
       id: "r-1",
-      action: "Create dedicated coverage for AI SaaS development",
+      problem: "No coverage for “AI SaaS development” — 8.4K searches, you do not rank",
+      howTo: "Create a dedicated /ai-saas-development page. Do not stretch /ai-development — it does not name the SaaS use case.",
       reason:
         "8.4K monthly search demand and 34 relevant AI prompts in this cluster. You do not rank, and Adaforge + Stackwright own the answers.",
       why: [
@@ -558,7 +608,8 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-2",
-      action: "Get listed on Clutch and the 2026 agency roundup",
+      problem: "You are missing from Clutch and the 2026 agency roundup that AI cites",
+      howTo: "Get listed on Clutch and request inclusion on the 2026 agency roundup. Those two sources move ChatGPT recommendations in this category.",
       reason:
         "These two sources are cited across the high-intent prompts where you are absent. This is a citation gap, not a backlink vanity play.",
       why: [
@@ -584,7 +635,8 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-3",
-      action: "Refresh /software-development",
+      problem: "/software-development lost 14 positions on Belgian and Dutch terms",
+      howTo: "Refresh /software-development with case studies, schema, and NL-specific proof. Do not replace the URL.",
       reason:
         "Lost 14 ranking positions on Belgian and Dutch terms. The same page is weak in AI prompt coverage for consulting queries.",
       why: [
@@ -612,7 +664,8 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-4",
-      action: "Pursue 8 domains that already link to 3+ competitors",
+      problem: "Eight sites that already link to three or more rivals do not mention you",
+      howTo: "Pursue those eight competitor-linking domains. Three of them are already in the AI citation set — start there.",
       reason:
         "These are reachable authority gaps tied to pages AI already treats as category sources.",
       why: [
@@ -637,7 +690,8 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-5",
-      action: "Add Organization + Service schema on 12 priority pages",
+      problem: "12 priority pages have no Service schema — machines cannot map you to the category",
+      howTo: "Add Organization + Service JSON-LD on the 12 money pages, naming each offer and the markets you serve.",
       reason:
         "Crawlability is fine; machines still cannot map Northline to the category being asked about.",
       why: [
@@ -662,7 +716,8 @@ export const demoWorkspace: Workspace = {
     },
     {
       id: "r-6",
-      action: "Add Dutch-market proof to win Netherlands AI prompts",
+      problem: "Netherlands traffic is strong; AI almost never names you there",
+      howTo: "Add Dutch-market proof and get listed on emerce.nl. Helix Labs is cited there; you are not.",
       reason:
         "The Netherlands sends strong traffic (6.1K) but AI visibility is 38/100 versus 64 in Belgium.",
       why: [

@@ -51,8 +51,8 @@ export default function OnboardingPage() {
             What business are we looking at?
           </h1>
           <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-            Just the name and site. You can connect Google later. First you get a
-            sample week so the product makes sense.
+            Just the name and site. You start on Look — daily monitoring, no
+            solutions. Connect Google when you want live numbers.
           </p>
           <div className="mt-8 space-y-4">
             <div className="space-y-1.5">
@@ -99,7 +99,7 @@ export default function OnboardingPage() {
               />
             </div>
             <Button className="w-full" onClick={finish}>
-              Show me this week
+              Show me today
             </Button>
             <Button variant="ghost" className="w-full" onClick={() => setStep(1)}>
               Back

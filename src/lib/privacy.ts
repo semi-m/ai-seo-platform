@@ -13,7 +13,7 @@ export const dataRules = [
   },
   {
     title: "Language models do not get raw customer lists",
-    body: "OpenRouter / OpenAI only see a small evidence packet (scores, page URLs, prompt text) to write the Monday paragraph. No emails, no CRM, no passwords.",
+    body: "OpenRouter / OpenAI only see a small evidence packet (scores, page URLs, prompt text) to write the weekly progress document. No emails, no CRM, no passwords.",
   },
   {
     title: "We do not train on your workspace",

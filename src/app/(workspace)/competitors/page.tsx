@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +13,7 @@ const sourceLabel = {
 };
 
 export default function CompetitorsPage() {
-  const { workspace, loading } = useWorkspace();
+  const { loading, limits, visibleRivals, lockedRivalCount } = useWorkspace();
   if (loading) {
     return <p className="text-sm text-muted-foreground">Loading competitors…</p>;
   }
@@ -21,12 +22,27 @@ export default function CompetitorsPage() {
     <div>
       <PageHeader
         eyebrow="Rivals"
-        title="Who buyers see instead of you"
-        description="Some rivals you already know. Some only show up in ChatGPT. We keep those lists separate."
+        title={limits.rivals === 1 ? "The one rival we watch" : "Who buyers see instead of you"}
+        description={
+          limits.rivals === 1
+            ? "Look watches a single competitor. We do not map the gap or tell you how to close it."
+            : limits.howTo
+              ? "Why they win, and what to do about the gaps."
+              : "Who is ahead, and on which keywords and prompts. Not how to beat them."
+        }
       />
 
+      {lockedRivalCount > 0 ? (
+        <p className="mb-4 text-sm text-muted-foreground">
+          {lockedRivalCount} more rivals unlock on Watch.{" "}
+          <Link href="/plans" className="text-primary underline-offset-4 hover:underline">
+            See plans
+          </Link>
+        </p>
+      ) : null}
+
       <div className="space-y-4">
-        {workspace.competitors.map((c) => (
+        {visibleRivals.map((c) => (
           <Card key={c.id}>
             <CardHeader>
               <div className="flex flex-wrap items-start justify-between gap-2">
@@ -41,25 +57,29 @@ export default function CompetitorsPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-[15px] leading-relaxed">{c.why}</p>
-              <dl className="grid grid-cols-3 gap-3 text-sm">
-                <div className="rounded-lg bg-muted/70 px-3 py-2">
-                  <dt className="text-xs text-muted-foreground">Keyword gap</dt>
-                  <dd className="font-heading text-2xl">{c.keywordGap}</dd>
-                </div>
-                <div className="rounded-lg bg-muted/70 px-3 py-2">
-                  <dt className="text-xs text-muted-foreground">Prompt gap</dt>
-                  <dd className="font-heading text-2xl">{c.promptGap}</dd>
-                </div>
-                <div className="rounded-lg bg-muted/70 px-3 py-2">
-                  <dt className="text-xs text-muted-foreground">Source gap</dt>
-                  <dd className="font-heading text-2xl">{c.sourceGap}</dd>
-                </div>
-              </dl>
-              <p className="text-xs text-muted-foreground">
-                Gaps are keywords, prompts, and cited sources — not estimated
-                competitor sessions. Third-party traffic numbers are guesswork.
-              </p>
+              {limits.diagnosis ? (
+                <p className="text-[15px] leading-relaxed">{c.why}</p>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  They show up next to you. Watch explains the gap. Fix is the call.
+                </p>
+              )}
+              {limits.diagnosis ? (
+                <dl className="grid grid-cols-3 gap-3 text-sm">
+                  <div className="rounded-lg bg-muted/70 px-3 py-2">
+                    <dt className="text-xs text-muted-foreground">Keyword gap</dt>
+                    <dd className="font-heading text-2xl">{c.keywordGap}</dd>
+                  </div>
+                  <div className="rounded-lg bg-muted/70 px-3 py-2">
+                    <dt className="text-xs text-muted-foreground">Prompt gap</dt>
+                    <dd className="font-heading text-2xl">{c.promptGap}</dd>
+                  </div>
+                  <div className="rounded-lg bg-muted/70 px-3 py-2">
+                    <dt className="text-xs text-muted-foreground">Source gap</dt>
+                    <dd className="font-heading text-2xl">{c.sourceGap}</dd>
+                  </div>
+                </dl>
+              ) : null}
             </CardContent>
           </Card>
         ))}

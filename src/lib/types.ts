@@ -119,7 +119,10 @@ export type ScoreFactors = {
 
 export type Recommendation = {
   id: string;
-  action: string;
+  /** What is wrong — Watch tier. */
+  problem: string;
+  /** How to repair it — Fix / enterprise only. */
+  howTo: string;
   reason: string;
   why: string[];
   impact: Impact;
@@ -155,12 +158,42 @@ export type ContentPage = {
   note: string;
 };
 
+export type DailyMover = {
+  term: string;
+  from: number;
+  to: number;
+  direction: "up" | "down";
+};
+
+export type DailySnapshot = {
+  checkedAt: string;
+  visits: number;
+  visitsDelta: number;
+  emailPromise: string;
+  lastEmail: {
+    sent: string;
+    subject: string;
+  };
+  movers: DailyMover[];
+};
+
+export type WeeklyBrief = {
+  weekOf: string;
+  headline: string;
+  wins: string[];
+  losses: string[];
+  rivalMove: string;
+  toFix: { id: string; problem: string; impact: string }[];
+};
+
 export type Workspace = {
   brand: string;
   domain: string;
   products: string[];
   periodLabel: string;
   weeklyNarrative: string;
+  daily: DailySnapshot;
+  weeklyBrief: WeeklyBrief;
   discoverability: {
     score: number;
     formula: string;

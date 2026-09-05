@@ -10,7 +10,15 @@ import {
 } from "react";
 import { demoWorkspace } from "./demo-provider";
 import { integrations } from "./integrations";
-import type { RecStatus, Recommendation, Workspace } from "./types";
+import { isPlanId, planById, planLimits, type Plan, type PlanId, type PlanLimits } from "./tiers";
+import type {
+  Competitor,
+  Keyword,
+  Prompt,
+  RecStatus,
+  Recommendation,
+  Workspace,
+} from "./types";
 
 const STORAGE_KEY = "lyra-workspace-overrides";
 
@@ -21,6 +29,7 @@ type Overrides = {
   recStatus?: Record<string, RecStatus>;
   connections?: Record<string, boolean>;
   onboarded?: boolean;
+  plan?: PlanId;
 };
 
 type WorkspaceContextValue = {
@@ -32,6 +41,15 @@ type WorkspaceContextValue = {
   requiredConnected: number;
   usingDemo: boolean;
   providerLabel: string;
+  planId: PlanId;
+  plan: Plan;
+  limits: PlanLimits;
+  visibleKeywords: Keyword[];
+  visiblePrompts: Prompt[];
+  visibleRivals: Competitor[];
+  lockedKeywordCount: number;
+  lockedPromptCount: number;
+  lockedRivalCount: number;
   completeOnboarding: (input: {
     brand: string;
     domain: string;
@@ -39,6 +57,7 @@ type WorkspaceContextValue = {
   }) => void;
   setRecStatus: (id: string, status: RecStatus) => void;
   toggleConnection: (id: string) => void;
+  setPlan: (id: PlanId) => void;
   resetDemo: () => void;
 };
 
@@ -56,6 +75,10 @@ function applyOverrides(base: Workspace, overrides: Overrides): Workspace {
       status: recStatus[rec.id] ?? rec.status,
     })),
   };
+}
+
+function rankedKeywords(keywords: Keyword[]) {
+  return keywords.filter((k) => k.bucket !== "opportunity" && k.position !== null);
 }
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
@@ -81,6 +104,20 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     () => applyOverrides(demoWorkspace, overrides),
     [overrides],
   );
+
+  const planId: PlanId = isPlanId(overrides.plan ?? "") ? overrides.plan! : "free";
+  const limits = planLimits[planId];
+  const plan = planById[planId];
+
+  const keywordPool = limits.rankedKeywordsOnly
+    ? rankedKeywords(workspace.keywords)
+    : workspace.keywords;
+  const visibleKeywords = keywordPool;
+  const visiblePrompts = workspace.prompts.slice(0, limits.prompts);
+  const visibleRivals = workspace.competitors.slice(0, limits.rivals);
+  const lockedKeywordCount = workspace.keywords.length - visibleKeywords.length;
+  const lockedPromptCount = Math.max(0, workspace.prompts.length - visiblePrompts.length);
+  const lockedRivalCount = Math.max(0, workspace.competitors.length - visibleRivals.length);
 
   const connections = overrides.connections ?? {};
   const required = integrations.filter((i) => i.tier === "required");
@@ -122,6 +159,10 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const setPlan = useCallback((id: PlanId) => {
+    setOverrides((prev) => ({ ...prev, plan: id }));
+  }, []);
+
   const resetDemo = useCallback(() => {
     setOverrides({});
     localStorage.removeItem(STORAGE_KEY);
@@ -136,10 +177,20 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       connectedCount,
       requiredConnected,
       usingDemo,
-      providerLabel: usingDemo ? "Sample report" : "Your data",
+      providerLabel: usingDemo ? "Sample company" : "Your data",
+      planId,
+      plan,
+      limits,
+      visibleKeywords,
+      visiblePrompts,
+      visibleRivals,
+      lockedKeywordCount,
+      lockedPromptCount,
+      lockedRivalCount,
       completeOnboarding,
       setRecStatus,
       toggleConnection,
+      setPlan,
       resetDemo,
     }),
     [
@@ -150,9 +201,19 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       connectedCount,
       requiredConnected,
       usingDemo,
+      planId,
+      plan,
+      limits,
+      visibleKeywords,
+      visiblePrompts,
+      visibleRivals,
+      lockedKeywordCount,
+      lockedPromptCount,
+      lockedRivalCount,
       completeOnboarding,
       setRecStatus,
       toggleConnection,
+      setPlan,
       resetDemo,
     ],
   );

@@ -7,12 +7,14 @@ import {
   Cable,
   Compass,
   Eye,
+  FileText,
   ListChecks,
   Lock,
   Menu,
   Search,
   ShieldAlert,
   Sun,
+  Tags,
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,20 +22,22 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useWorkspace } from "@/lib/workspace-context";
 
-const primary = [
-  { href: "/overview", label: "Home", icon: Sun },
-  { href: "/recommendations", label: "This week", icon: ListChecks },
-];
-
-const details = [
+const daily = [
+  { href: "/overview", label: "Today", icon: Sun },
   { href: "/search", label: "Google", icon: Search },
   { href: "/ai-visibility", label: "ChatGPT & AI", icon: Eye },
   { href: "/competitors", label: "Rivals", icon: Users },
   { href: "/health", label: "Website", icon: ShieldAlert },
 ];
 
+const paid = [
+  { href: "/weekly", label: "Weekly", icon: FileText, need: "pro" as const },
+  { href: "/recommendations", label: "To fix", icon: ListChecks, need: "pro" as const },
+];
+
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  const { limits } = useWorkspace();
   const linkClass = (href: string) => {
     const active = pathname === href;
     return cn(
@@ -46,31 +50,15 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <nav className="flex flex-col gap-4">
-      <div className="flex flex-col gap-0.5">
-        {primary.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link key={item.href} href={item.href} onClick={onNavigate} className={linkClass(item.href)}>
-              <Icon className="size-4" />
-              {item.label}
-            </Link>
-          );
-        })}
-      </div>
       <div>
         <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground/80">
-          Look closer
+          Every day
         </p>
         <div className="flex flex-col gap-0.5">
-          {details.map((item) => {
+          {daily.map((item) => {
             const Icon = item.icon;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onNavigate}
-                className={linkClass(item.href)}
-              >
+              <Link key={item.href} href={item.href} onClick={onNavigate} className={linkClass(item.href)}>
                 <Icon className="size-4" />
                 {item.label}
               </Link>
@@ -78,7 +66,31 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           })}
         </div>
       </div>
+      <div>
+        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground/80">
+          Paid
+        </p>
+        <div className="flex flex-col gap-0.5">
+          {paid.map((item) => {
+            const Icon = item.icon;
+            const locked = item.need === "pro" && !limits.weeklyDocument;
+            return (
+              <Link key={item.href} href={item.href} onClick={onNavigate} className={linkClass(item.href)}>
+                <Icon className="size-4" />
+                {item.label}
+                {locked ? (
+                  <span className="ml-auto text-[10px] uppercase tracking-wide opacity-70">Watch</span>
+                ) : null}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
       <div className="flex flex-col gap-0.5">
+        <Link href="/plans" onClick={onNavigate} className={linkClass("/plans")}>
+          <Tags className="size-4" />
+          Plans
+        </Link>
         <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
           <Cable className="size-4" />
           Connect
@@ -93,7 +105,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function BrandBlock() {
-  const { workspace, providerLabel } = useWorkspace();
+  const { workspace, providerLabel, plan } = useWorkspace();
   return (
     <div className="px-3 pb-4">
       <Link href="/overview" className="flex items-center gap-2 font-medium">
@@ -107,7 +119,7 @@ function BrandBlock() {
         <span className="block">{workspace.domain}</span>
       </p>
       <p className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground/80">
-        {providerLabel}
+        {plan.name} · {providerLabel}
       </p>
     </div>
   );
@@ -115,8 +127,7 @@ function BrandBlock() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
-  const { workspace } = useWorkspace();
-  const openCount = workspace.recommendations.filter((r) => r.status === "open").length;
+  const { plan, limits } = useWorkspace();
 
   return (
     <div className="min-h-dvh bg-background">
@@ -124,7 +135,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <BrandBlock />
         <NavLinks />
         <div className="mt-auto px-3 pt-6 text-xs text-muted-foreground">
-          {openCount} left this week
+          {limits.howTo
+            ? "We show you how to fix it"
+            : limits.diagnosis
+              ? "What is broken — not how"
+              : "Monitoring only"}
         </div>
       </aside>
 
@@ -133,6 +148,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2 text-sm font-medium">
             <Compass className="size-4" />
             Lyra
+            <span className="text-xs font-normal text-muted-foreground">{plan.name}</span>
           </div>
           <Button
             variant="ghost"

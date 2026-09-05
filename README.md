@@ -1,8 +1,18 @@
-# Lyra — Discoverability for founders
+# Lyra — Daily SEO for one brand
 
-A weekly action list, not an SEO dashboard. Home asks: **what should we do this week?**
+A day-to-day look at how you show up on Google and in ChatGPT. The weekly write-up is a **progress document**, not the product.
 
 **Repo:** [github.com/semi-m/ai-seo-platform](https://github.com/semi-m/ai-seo-platform)
+
+## Three tiers
+
+| Plan | Price | What it is |
+| --- | --- | --- |
+| **Look** | Free | Your website. Keywords you already rank for. One rival. Daily analytics. AI rank on **3 prompts**. Email if you go up. **No solutions.** |
+| **Watch** | Monthly | Daily monitoring + a **weekly progress document**. **5 prompts.** What you should fix (diagnosis, evidence, impact). **Not how to fix it.** |
+| **Fix** | Talk to us | You use the same tool. We get on a call and show you **how** — pages, citations, schema. |
+
+Switch tiers in the app under **Plans** to preview the gates (sample company: Northline).
 
 ## Run
 
@@ -17,40 +27,33 @@ npm run dev
 
 Open [http://127.0.0.1:4731](http://127.0.0.1:4731)
 
-Or **Code → Download ZIP**, unzip, then the same `npm` commands.
-
 ## Which APIs (and which not)
 
 Connect only what feeds the model. Copy `.env.example` when you go live.
 
 | Founder name | API | Why |
 | --- | --- | --- |
-| Your Google Search | Google Search Console | Real queries and clicks. Free. Connect first. |
-| ChatGPT answers | OpenAI (official API) | Are you named in ChatGPT answers? |
-| Spare AI writer | OpenRouter | If OpenAI is down, still write/parse via other models. Not a ChatGPT.com backup. |
-| AI citations | ChatGPT + Gemini | No Perplexity. |
-| Google rankings | Search Console + Serper | GSC for you. Serper 2,500 free SERPs for new terms and rivals. |
-| Your backlinks | Bing Webmaster (optional) | Free, verified sites only. |
-| Research search | Tavily / Brave (optional) | Free credits. Not a rank tracker. |
-| Your website | Built-in crawl | Broken pages and missing proof. No third-party API. |
-| Who visits | GA4 (optional) | Did ChatGPT send anyone? |
-| Gemini | Gemini API (optional) | Google’s AI answers. |
+| Your Google Search | Google Search Console | Keywords you already rank for. Free. |
+| ChatGPT answers | OpenAI (official API) | Are you named? |
+| Spare AI writer | OpenRouter | If OpenAI is down, still write/parse. Not a ChatGPT.com backup. |
+| Google page-one | Serper | 2,500 free SERPs for new terms and rivals. |
+| Gemini | Gemini API | Google’s AI answers. |
+| Your website | Built-in crawl | Pages you can see every day. |
+| Who visits | GA4 (optional) | Daily analytics. |
 
-**Do not add for V1:** Meta Pixel, Semrush, Ahrefs (unless you later want a link index), scraping the ChatGPT website, Similarweb rival traffic, CRM.
+**Do not add for V1:** Perplexity, DataForSEO, Ahrefs API, Semrush, Meta Pixel, scraping ChatGPT’s website.
 
-Live keys plug in through `src/lib/providers.ts`. Until then the UI uses a full sample workspace (Northline).
+Live keys plug in through `src/lib/providers.ts`. Until then the UI uses a sample workspace.
 
 ## Data protection
 
 - Secrets never in this public repo — Vercel env / local `.env` only.
-- One workspace per company. No shared query caches across customers.
-- Vendors get the minimum: GSC OAuth, keyword lists, chosen buyer questions. Not CRM or email.
-- OpenRouter/OpenAI get a small evidence packet for the Monday paragraph, not raw analytics.
-- Disable provider training where the API allows. No selling data.
-- Last good week stays in our database. Disconnect revokes Google and deletes the folder.
+- One workspace per company.
+- Vendors get the minimum. No CRM or email lists.
+- Last good snapshot stays if a vendor is down.
 
 See **Your data** in the app (`/privacy`).
 
 ## Product rule
 
-A language model may write the weekly paragraph. It may not invent scores. Ranking of actions is the formula in `src/lib/scoring.ts`.
+Scores come from the formula in `src/lib/scoring.ts`. A language model may write the weekly document. It may not invent the numbers or the ranked “to fix” list.

@@ -20,9 +20,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Lyra — Discoverability intelligence",
+  title: "Lyra — Daily SEO, with a weekly progress document",
   description:
-    "See how a brand is found across Google and AI search, why competitors win, and what to do this week.",
+    "Look at your site every day. Free monitors rankings, one rival, and three AI prompts. Pay for the weekly document and what to fix. Enterprise shows you how.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

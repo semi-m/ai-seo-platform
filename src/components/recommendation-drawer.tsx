@@ -32,7 +32,7 @@ export function RecommendationDrawer({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { setRecStatus } = useWorkspace();
+  const { setRecStatus, limits } = useWorkspace();
   if (!rec) return null;
   const score = opportunityScore(rec.factors);
 
@@ -41,7 +41,7 @@ export function RecommendationDrawer({
       <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
         <SheetHeader>
           <SheetTitle className="pr-8 text-left text-xl leading-snug">
-            {rec.action}
+            {rec.problem}
           </SheetTitle>
           <SheetDescription className="text-left text-[15px] leading-relaxed">
             {rec.reason}
@@ -54,7 +54,9 @@ export function RecommendationDrawer({
           >
             {rec.impactLabel}
           </span>
-          <Badge variant="outline">{effortLabel(rec.effort)}</Badge>
+          {limits.howTo ? (
+            <Badge variant="outline">{effortLabel(rec.effort)}</Badge>
+          ) : null}
           <Badge variant="outline">Confidence {rec.confidence}</Badge>
           {rec.channels.map((c) => (
             <Badge key={c} variant="secondary">
@@ -90,6 +92,24 @@ export function RecommendationDrawer({
               ))}
             </dl>
           </section>
+
+          {limits.howTo ? (
+            <section>
+              <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                How to fix it
+              </h3>
+              <p className="text-sm leading-relaxed">{rec.howTo}</p>
+            </section>
+          ) : (
+            <section>
+              <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                How to fix it
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Watch names the problem. Fix is a call — we walk this in the tool.
+              </p>
+            </section>
+          )}
 
           <section>
             <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
