@@ -9,7 +9,6 @@ import {
   Eye,
   FileText,
   ListChecks,
-  Lock,
   Search,
   ShieldAlert,
   Sun,
@@ -96,10 +95,6 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
         <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
           <Cable className="size-4" />
           Connect
-        </Link>
-        <Link href="/privacy" onClick={onNavigate} className={linkClass("/privacy")}>
-          <Lock className="size-4" />
-          Your data
         </Link>
       </div>
     </nav>

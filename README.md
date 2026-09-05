@@ -52,7 +52,7 @@ Live keys plug in through `src/lib/providers.ts`. Until then the UI uses a sampl
 - Vendors get the minimum. No CRM or email lists.
 - Last good snapshot stays if a vendor is down.
 
-See **Your data** in the app (`/privacy`).
+Internal notes (not a product screen): `src/lib/privacy.ts`.
 
 ## Product rule
 

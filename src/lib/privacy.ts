@@ -1,3 +1,4 @@
+/** Internal data-protection rules for founders. Not a customer product screen. */
 export const dataRules = [
   {
     title: "Your keys never go in GitHub",
