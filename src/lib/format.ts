@@ -27,7 +27,7 @@ export function impactClass(impact: Impact): string {
 }
 
 export function effortLabel(effort: Effort): string {
-  return effort === "low" ? "Low effort" : effort === "medium" ? "Medium effort" : "High effort";
+  return effort === "low" ? "Quick" : effort === "medium" ? "A half day" : "A real project";
 }
 
 export function pct(n: number): string {

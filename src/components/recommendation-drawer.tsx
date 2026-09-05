@@ -15,12 +15,12 @@ import type { Recommendation } from "@/lib/types";
 import { useWorkspace } from "@/lib/workspace-context";
 
 const factorLabels: Record<string, string> = {
-  demand: "Demand",
-  relevance: "Relevance",
-  gap: "Gap",
-  reachability: "Reachable",
-  competitorPressure: "Competitor pressure",
-  confidence: "Confidence",
+  demand: "How many people ask",
+  relevance: "Fits what you sell",
+  gap: "How far behind you are",
+  reachability: "Can you actually win this",
+  competitorPressure: "Rivals already there",
+  confidence: "How sure we are",
 };
 
 export function RecommendationDrawer({
@@ -139,7 +139,7 @@ export function RecommendationDrawer({
                 onOpenChange(false);
               }}
             >
-              Snooze
+              Later
             </Button>
             <Button
               variant="ghost"

@@ -27,9 +27,9 @@ export default function AiVisibilityPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="AI visibility"
-        title={`You are absent from ${missing.length} high-intent prompts`}
-        description="Not “AI visibility = 42%.” Each prompt was sampled 3 times across ChatGPT, Perplexity, and Gemini. Mention rate and citation rate are stored separately — ChatGPT often mentions without linking."
+        eyebrow="ChatGPT & AI"
+        title={`AI does not name you on ${missing.length} buyer questions`}
+        description="We ask ChatGPT, Perplexity, and Gemini the same questions three times. Mention = they said your name. Citation = they linked you. Those are not the same thing."
       />
 
       <section className="mb-6 grid gap-3 sm:grid-cols-3">

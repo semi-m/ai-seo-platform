@@ -23,9 +23,9 @@ export default function HealthPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Site health"
-        title="Only issues that can block discovery"
-        description="Not a 200-check audit. Each issue names the pages, the keywords, and the AI prompts it can affect."
+        eyebrow="Website"
+        title="Things on your site that hide you"
+        description="Not 200 warnings. Only problems that can stop Google or ChatGPT from understanding a money page."
       />
 
       <div className="mb-8 space-y-3">

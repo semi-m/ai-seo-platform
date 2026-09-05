@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { demoWorkspace } from "./demo-provider";
+import { integrations } from "./integrations";
 import type { RecStatus, Recommendation, Workspace } from "./types";
 
 const STORAGE_KEY = "atlas-workspace-overrides";
@@ -18,6 +19,7 @@ type Overrides = {
   domain?: string;
   products?: string[];
   recStatus?: Record<string, RecStatus>;
+  connections?: Record<string, boolean>;
   onboarded?: boolean;
 };
 
@@ -25,6 +27,10 @@ type WorkspaceContextValue = {
   workspace: Workspace;
   loading: boolean;
   onboarded: boolean;
+  connections: Record<string, boolean>;
+  connectedCount: number;
+  requiredConnected: number;
+  usingDemo: boolean;
   providerLabel: string;
   completeOnboarding: (input: {
     brand: string;
@@ -32,6 +38,7 @@ type WorkspaceContextValue = {
     products: string[];
   }) => void;
   setRecStatus: (id: string, status: RecStatus) => void;
+  toggleConnection: (id: string) => void;
   resetDemo: () => void;
 };
 
@@ -75,6 +82,16 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     [overrides],
   );
 
+  const connections = overrides.connections ?? {};
+  const required = integrations.filter((i) => i.tier === "required");
+  const requiredConnected = required.filter(
+    (i) => i.auth === "built-in" || connections[i.id],
+  ).length;
+  const connectedCount = integrations.filter(
+    (i) => i.auth === "built-in" || connections[i.id],
+  ).length;
+  const usingDemo = requiredConnected < required.length;
+
   const completeOnboarding = useCallback(
     (input: { brand: string; domain: string; products: string[] }) => {
       setOverrides((prev) => ({
@@ -95,6 +112,16 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const toggleConnection = useCallback((id: string) => {
+    setOverrides((prev) => ({
+      ...prev,
+      connections: {
+        ...prev.connections,
+        [id]: !prev.connections?.[id],
+      },
+    }));
+  }, []);
+
   const resetDemo = useCallback(() => {
     setOverrides({});
     localStorage.removeItem(STORAGE_KEY);
@@ -105,12 +132,29 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       workspace,
       loading: !hydrated,
       onboarded: Boolean(overrides.onboarded),
-      providerLabel: "Demo data · live APIs later",
+      connections,
+      connectedCount,
+      requiredConnected,
+      usingDemo,
+      providerLabel: usingDemo ? "Sample report" : "Your data",
       completeOnboarding,
       setRecStatus,
+      toggleConnection,
       resetDemo,
     }),
-    [workspace, hydrated, overrides.onboarded, completeOnboarding, setRecStatus, resetDemo],
+    [
+      workspace,
+      hydrated,
+      overrides.onboarded,
+      connections,
+      connectedCount,
+      requiredConnected,
+      usingDemo,
+      completeOnboarding,
+      setRecStatus,
+      toggleConnection,
+      resetDemo,
+    ],
   );
 
   return (

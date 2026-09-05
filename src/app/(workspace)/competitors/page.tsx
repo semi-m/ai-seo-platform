@@ -20,9 +20,9 @@ export default function CompetitorsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Competitors"
-        title="Who is beating you, where, and why"
-        description="The same companies do not compete everywhere. Business competitors, search competitors, and AI competitors are three lists."
+        eyebrow="Rivals"
+        title="Who buyers see instead of you"
+        description="Some rivals you already know. Some only show up in ChatGPT. We keep those lists separate."
       />
 
       <div className="space-y-4">

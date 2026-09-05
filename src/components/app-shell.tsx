@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
+  Cable,
   Compass,
   Eye,
-  LayoutDashboard,
   ListChecks,
   Menu,
   Search,
   ShieldAlert,
+  Sun,
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,39 +19,68 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useWorkspace } from "@/lib/workspace-context";
 
-const nav = [
-  { href: "/overview", label: "Overview", icon: LayoutDashboard },
-  { href: "/search", label: "Search", icon: Search },
-  { href: "/ai-visibility", label: "AI visibility", icon: Eye },
-  { href: "/competitors", label: "Competitors", icon: Users },
-  { href: "/recommendations", label: "Recommendations", icon: ListChecks },
-  { href: "/health", label: "Site health", icon: ShieldAlert },
+const primary = [
+  { href: "/overview", label: "Home", icon: Sun },
+  { href: "/recommendations", label: "This week", icon: ListChecks },
+];
+
+const details = [
+  { href: "/search", label: "Google", icon: Search },
+  { href: "/ai-visibility", label: "ChatGPT & AI", icon: Eye },
+  { href: "/competitors", label: "Rivals", icon: Users },
+  { href: "/health", label: "Website", icon: ShieldAlert },
 ];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  const linkClass = (href: string) => {
+    const active = pathname === href;
+    return cn(
+      "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
+      active
+        ? "bg-primary text-primary-foreground"
+        : "text-muted-foreground hover:bg-accent hover:text-foreground",
+    );
+  };
+
   return (
-    <nav className="flex flex-col gap-0.5">
-      {nav.map((item) => {
-        const active = pathname === item.href;
-        const Icon = item.icon;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={onNavigate}
-            className={cn(
-              "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
-              active
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-accent hover:text-foreground",
-            )}
-          >
-            <Icon className="size-4" />
-            {item.label}
-          </Link>
-        );
-      })}
+    <nav className="flex flex-col gap-4">
+      <div className="flex flex-col gap-0.5">
+        {primary.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link key={item.href} href={item.href} onClick={onNavigate} className={linkClass(item.href)}>
+              <Icon className="size-4" />
+              {item.label}
+            </Link>
+          );
+        })}
+      </div>
+      <div>
+        <p className="mb-1 px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground/80">
+          Look closer
+        </p>
+        <div className="flex flex-col gap-0.5">
+          {details.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onNavigate}
+                className={linkClass(item.href)}
+              >
+                <Icon className="size-4" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+      <Link href="/connections" onClick={onNavigate} className={linkClass("/connections")}>
+        <Cable className="size-4" />
+        Connect
+      </Link>
     </nav>
   );
 }
@@ -87,7 +117,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <BrandBlock />
         <NavLinks />
         <div className="mt-auto px-3 pt-6 text-xs text-muted-foreground">
-          {openCount} actions this week
+          {openCount} left this week
         </div>
       </aside>
 
@@ -113,7 +143,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
         </header>
-        <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6 lg:py-10">
           {children}
         </main>
       </div>

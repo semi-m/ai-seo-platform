@@ -11,15 +11,16 @@ import { useWorkspace } from "@/lib/workspace-context";
 export default function OnboardingPage() {
   const router = useRouter();
   const { completeOnboarding, workspace } = useWorkspace();
+  const [step, setStep] = useState(1);
   const [brand, setBrand] = useState(workspace.brand);
   const [domain, setDomain] = useState(workspace.domain);
   const [products, setProducts] = useState(workspace.products.join(", "));
   const [error, setError] = useState<string | null>(null);
 
-  function submit(event: React.FormEvent) {
-    event.preventDefault();
+  function finish() {
     if (!brand.trim() || !domain.trim()) {
-      setError("Brand and domain are required.");
+      setError("We need the company name and website.");
+      setStep(1);
       return;
     }
     completeOnboarding({
@@ -38,55 +39,74 @@ export default function OnboardingPage() {
         </span>
         <div>
           <p className="text-sm font-medium">Atlas</p>
-          <p className="text-xs text-muted-foreground">Discoverability intelligence</p>
+          <p className="text-xs text-muted-foreground">
+            Step {step} of 2 · two minutes
+          </p>
         </div>
       </div>
 
-      <h1 className="font-heading text-3xl tracking-tight">
-        How discoverable is this business?
-      </h1>
-      <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-        Enter a brand. V1 loads a complete Northline demo so you can judge the
-        product — live GSC, rank, and AI collectors plug in later behind the same
-        screens.
-      </p>
-
-      <form onSubmit={submit} className="mt-8 space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="brand">Brand name</Label>
-          <Input
-            id="brand"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            placeholder="Northline"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="domain">Website</Label>
-          <Input
-            id="domain"
-            value={domain}
-            onChange={(e) => setDomain(e.target.value)}
-            placeholder="northline.ai"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="products">Products or services</Label>
-          <Input
-            id="products"
-            value={products}
-            onChange={(e) => setProducts(e.target.value)}
-            placeholder="AI product development, AI SaaS"
-          />
-          <p className="text-xs text-muted-foreground">
-            Comma-separated. Used to seed the keyword and prompt universe.
+      {step === 1 ? (
+        <>
+          <h1 className="font-heading text-3xl tracking-tight">
+            What business are we looking at?
+          </h1>
+          <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+            Just the name and site. You can connect Google later. First you get a
+            sample week so the product makes sense.
           </p>
-        </div>
-        {error ? <p className="text-sm text-destructive">{error}</p> : null}
-        <Button type="submit" className="w-full">
-          Generate first report
-        </Button>
-      </form>
+          <div className="mt-8 space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="brand">Company name</Label>
+              <Input
+                id="brand"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                placeholder="Northline"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="domain">Website</Label>
+              <Input
+                id="domain"
+                value={domain}
+                onChange={(e) => setDomain(e.target.value)}
+                placeholder="northline.ai"
+              />
+            </div>
+            {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            <Button className="w-full" onClick={() => setStep(2)}>
+              Continue
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <h1 className="font-heading text-3xl tracking-tight">
+            What should people find you for?
+          </h1>
+          <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+            A few services or products, in normal words. We turn these into Google
+            queries and ChatGPT questions.
+          </p>
+          <div className="mt-8 space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="products">You sell…</Label>
+              <Input
+                id="products"
+                value={products}
+                onChange={(e) => setProducts(e.target.value)}
+                placeholder="AI product development, automation"
+              />
+            </div>
+            <Button className="w-full" onClick={finish}>
+              Show me this week
+            </Button>
+            <Button variant="ghost" className="w-full" onClick={() => setStep(1)}>
+              Back
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

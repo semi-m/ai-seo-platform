@@ -8,10 +8,10 @@ import type { RecStatus } from "@/lib/types";
 import { useWorkspace } from "@/lib/workspace-context";
 
 const filters: { id: RecStatus | "all"; label: string }[] = [
-  { id: "open", label: "This week" },
+  { id: "open", label: "To do" },
   { id: "done", label: "Done" },
-  { id: "snoozed", label: "Snoozed" },
-  { id: "dismissed", label: "Dismissed" },
+  { id: "snoozed", label: "Later" },
+  { id: "dismissed", label: "Skipped" },
   { id: "all", label: "All" },
 ];
 
@@ -32,9 +32,9 @@ export default function RecommendationsPage() {
     <div>
       <div className="mb-2 flex flex-wrap items-start justify-between gap-3">
         <PageHeader
-          eyebrow="Recommendations"
-          title="The operating list — not another report"
-          description="Every action has a reason, estimated impact, effort, and a Show why breakdown. Done / snooze / dismiss are saved in this browser."
+          eyebrow="This week"
+          title="A short list. Do it, mark it done."
+          description="Each card is one job. Tap Why this if you do not trust it. Done / later / skip stay in this browser."
         />
         <Button variant="ghost" size="sm" onClick={resetDemo}>
           Reset demo

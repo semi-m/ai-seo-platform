@@ -62,7 +62,7 @@ export function RecommendationList({
                   className="shrink-0"
                   onClick={() => setActive(rec)}
                 >
-                  Show why
+                  Why this
                 </Button>
               </CardContent>
             </Card>

@@ -10,10 +10,10 @@ import { formatVisits, positionLabel } from "@/lib/scoring";
 import { useWorkspace } from "@/lib/workspace-context";
 
 const buckets: { id: KeywordBucket; label: string; blurb: string }[] = [
-  { id: "opportunity", label: "Opportunities", blurb: "Relevant demand you do not own yet." },
-  { id: "declining", label: "Declining", blurb: "Pages and terms losing positions." },
-  { id: "growing", label: "Growing", blurb: "Meaningful upward movement." },
-  { id: "winning", label: "Winning", blurb: "Protect these. Do not rewrite them for fun." },
+  { id: "opportunity", label: "Should go after", blurb: "People search this. You barely show up." },
+  { id: "declining", label: "Slipping", blurb: "You used to show up higher. You are losing ground." },
+  { id: "growing", label: "Getting better", blurb: "Keep going. These pages are working." },
+  { id: "winning", label: "Already yours", blurb: "Leave these alone. Do not rewrite them for fun." },
 ];
 
 export default function SearchPage() {
@@ -36,9 +36,9 @@ export default function SearchPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Search"
-        title="What you own, what you are losing, what to target"
-        description="Keywords are grouped by decision — not one infinite Semrush table."
+        eyebrow="Google"
+        title="What people type — and whether you show up"
+        description="Four piles. Pick a pile, do the recommended page action. No spreadsheet."
       />
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as KeywordBucket)}>
