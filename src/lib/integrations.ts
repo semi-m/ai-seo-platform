@@ -40,13 +40,13 @@ export const integrations: Integration[] = [
   {
     id: "perplexity",
     name: "Perplexity",
-    founderName: "AI citations",
-    why: "Perplexity returns clean source links. That is how we know which sites AI trusts.",
-    withoutIt: "We can see mentions, but not which pages to get listed on.",
+    founderName: "Perplexity (skip)",
+    why: "Best citation links, but it is a paid API. Lyra will not require it.",
+    withoutIt: "Citations come from ChatGPT links, Gemini grounding, and Google AI Overviews via DataForSEO.",
     envVars: ["PERPLEXITY_API_KEY"],
     auth: "api-key",
-    tier: "required",
-    cost: "Pay per prompt run",
+    tier: "later",
+    cost: "Paid — not in V1",
   },
   {
     id: "dataforseo",
@@ -75,7 +75,7 @@ export const integrations: Integration[] = [
     name: "Google Gemini",
     founderName: "Gemini & AI Overviews",
     why: "Tracks Gemini answers. Google AI Overviews can follow later on the same connection.",
-    withoutIt: "ChatGPT and Perplexity still work. Google’s AI layer stays blank.",
+    withoutIt: "ChatGPT and Google AI Overviews still cover most buyer questions.",
     envVars: ["GEMINI_API_KEY"],
     auth: "api-key",
     tier: "helpful",
@@ -85,7 +85,7 @@ export const integrations: Integration[] = [
     id: "ga4",
     name: "Google Analytics 4",
     founderName: "Who actually visits",
-    why: "Ties discovery to visits — including people coming from ChatGPT and Perplexity.",
+    why: "Ties discovery to visits — including people coming from ChatGPT and other AI tabs.",
     withoutIt: "We know if AI names you, not if anyone clicked through.",
     envVars: ["GA4_PROPERTY_ID"],
     auth: "oauth",
@@ -106,6 +106,7 @@ export const integrations: Integration[] = [
 ];
 
 export const skipIntegrations = [
+  "Perplexity API — paid; citations come from ChatGPT, Gemini, and Google AI Overviews instead",
   "Meta Pixel — ads, not discoverability",
   "Semrush or Ahrefs API — $450+/mo seats; add Ahrefs later only for links",
   "Scraping ChatGPT in a browser — breaks their terms; use official APIs",
