@@ -9,12 +9,12 @@ import {
   Eye,
   FileText,
   ListChecks,
+  Menu,
   Search,
   Sun,
   Tags,
   Users,
 } from "lucide-react";
-import { MobileTabBar } from "@/components/mobile-tab-bar";
 import { NotificationBell } from "@/components/notification-bell";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -25,7 +25,7 @@ const daily = [
   { href: "/search", label: "Google", icon: Search },
   { href: "/ai-visibility", label: "ChatGPT & AI", icon: Eye },
   { href: "/competitors", label: "Rivals", icon: Users },
-  { href: "/health", label: "Traffic", icon: Activity },
+  { href: "/health", label: "Website", icon: Activity },
 ];
 
 const paid = [
@@ -50,7 +50,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
     <nav className="flex flex-col gap-5">
       <div>
         <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue/60">
-          Monitor
+          Every day
         </p>
         <div className="flex flex-col gap-1">
           {daily.map((item) => {
@@ -125,7 +125,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh">
-      <aside className="glass fixed top-3 bottom-3 left-3 z-20 hidden w-60 flex-col rounded-[1.75rem] px-2 py-5 md:flex">
+      <aside className="glass fixed top-3 bottom-3 left-3 z-20 hidden w-60 flex-col rounded-[1.75rem] px-2 py-5 sm:flex">
         <BrandBlock />
         <NavLinks />
         <p className="mt-auto px-3 pt-6 text-[11px] leading-relaxed text-muted-foreground">
@@ -133,20 +133,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             ? "We show you how to fix it."
             : limits.diagnosis
               ? "What is broken — not how."
-              : "Monitoring only. No solutions."}
+              : "We watch. We do not tell you what to fix."}
         </p>
       </aside>
 
-      <div className="md:pl-[16.5rem]">
+      <div className="sm:pl-[16.5rem]">
         <header className="sticky top-3 z-30 mx-3 flex items-center gap-3 rounded-full px-3 py-1.5 glass">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm font-medium text-blue hover:bg-indigo/15 sm:hidden"
+          >
+            <Menu className="size-4" />
+            Menu
+          </button>
           <Link
             href="/overview"
-            className="flex items-center gap-2 pl-1 text-sm font-semibold text-blue md:hidden"
+            className="flex items-center gap-2 pl-1 text-sm font-semibold text-blue sm:hidden"
           >
             <Compass className="size-4" />
             Lyra
           </Link>
-          <div className="hidden min-w-0 flex-1 md:block">
+          <div className="hidden min-w-0 flex-1 sm:block">
             <p className="truncate text-sm font-semibold">{workspace.brand}</p>
             <p className="truncate text-[11px] text-muted-foreground">
               {workspace.daily.checkedAt} · {plan.name}
@@ -155,21 +163,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="ml-auto flex items-center gap-1">
             <Link
               href="/plans"
-              className="rounded-full bg-indigo/20 px-2.5 py-1 text-[11px] font-medium text-blue md:hidden"
+              className="rounded-full bg-indigo/20 px-2.5 py-1 text-[11px] font-medium text-blue sm:hidden"
             >
               {plan.name}
             </Link>
             <NotificationBell />
           </div>
         </header>
-        <main className="mx-auto w-full max-w-5xl px-4 pb-28 pt-5 sm:px-6 md:pb-12 md:pt-6">
+        <main className="mx-auto w-full max-w-5xl px-4 pb-12 pt-5 sm:px-6 sm:pt-6">
           {children}
         </main>
-        <MobileTabBar onMore={() => setOpen(true)} />
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent side="left" className="w-72 border-0 bg-transparent p-3 pt-6 shadow-none">
             <div className="glass h-full rounded-[1.75rem] px-3 pt-6">
-              <SheetTitle className="sr-only">More</SheetTitle>
+              <SheetTitle className="sr-only">Menu</SheetTitle>
               <BrandBlock />
               <NavLinks onNavigate={() => setOpen(false)} />
             </div>
