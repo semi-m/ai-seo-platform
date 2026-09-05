@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
+  Activity,
   Compass,
   Eye,
   FileText,
   ListChecks,
   Search,
-  ShieldAlert,
   Sun,
   Tags,
   Users,
@@ -25,7 +25,7 @@ const daily = [
   { href: "/search", label: "Google", icon: Search },
   { href: "/ai-visibility", label: "ChatGPT & AI", icon: Eye },
   { href: "/competitors", label: "Rivals", icon: Users },
-  { href: "/health", label: "Website", icon: ShieldAlert },
+  { href: "/health", label: "Traffic", icon: Activity },
 ];
 
 const paid = [
