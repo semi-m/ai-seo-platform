@@ -39,11 +39,8 @@ export default async function SignInPage({
 
         {params.error ? (
           <p className="mt-4 rounded-2xl bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            Google did not finish sign-in. Add this callback in Google Cloud:
-            <span className="mt-1 block font-mono text-[11px] break-all">
-              {process.env.AUTH_URL ?? "http://127.0.0.1:4731"}
-              /api/auth/callback/google
-            </span>
+            Google came back but the login cookie did not stick. Try Continue
+            with Google once more in this preview — not in a separate Chrome tab.
           </p>
         ) : null}
 
