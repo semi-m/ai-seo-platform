@@ -4,6 +4,65 @@ A day-to-day look at how you show up on Google and in ChatGPT. The weekly write-
 
 **Repo:** [github.com/semi-m/ai-seo-platform](https://github.com/semi-m/ai-seo-platform)
 
+## Your next steps (not done yet)
+
+The app code is in this repo. These are the founder steps still open. Tick them as you go.
+
+### See Lyra on your machine
+
+```bash
+git clone https://github.com/semi-m/ai-seo-platform.git
+cd ai-seo-platform
+cp .env.example .env
+# paste your keys into .env (never commit .env)
+npm install
+npm run db:push
+npm run dev
+```
+
+Open **http://127.0.0.1:4731** — that is Lyra. GitHub is only the code.
+
+### 1. Finish Google login
+
+Open [Google Cloud credentials](https://console.cloud.google.com/apis/credentials) → **Web client 1** (pencil).
+
+Authorized JavaScript origins:
+
+- `http://127.0.0.1:4731`
+
+Authorized redirect URIs:
+
+- `http://127.0.0.1:4731/api/auth/callback/google`
+
+Save. Then in Lyra click **Continue with Google**, add a real company, and on **Plans** hit **Notify me** on Watch.
+
+Direct edit (this project’s client):  
+https://console.cloud.google.com/apis/credentials/oauthclient/114284476681-bltcf98tggiapdnkk8m7cr96k13eegnm.apps.googleusercontent.com
+
+### 2. Create the free database (Neon)
+
+SQLite on your laptop works. Vercel will forget it. For a link that stays up:
+
+1. [neon.tech](https://neon.tech) → sign in with GitHub
+2. **New Project** → name it `lyra` → **Create**
+3. **Connect** → copy the `postgresql://…` string
+4. Keep it off GitHub. Paste it into Vercel as `DATABASE_URL` (and send it so we can switch the app from SQLite to Postgres)
+
+### 3. Put Lyra on a public URL (Vercel)
+
+1. [vercel.com/new](https://vercel.com/new) → import **semi-m/ai-seo-platform**
+2. Add env vars from `.env.example`. Minimum: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `AUTH_SECRET`, `AUTH_URL` (your `https://….vercel.app`), `DATABASE_URL` (Neon), `FOUNDER_EMAIL`
+3. Deploy
+4. Back in Google Cloud, add this redirect too: `https://YOUR-APP.vercel.app/api/auth/callback/google`
+5. Open the `*.vercel.app` link — that is the always-on Lyra
+
+### Not yet (do not block on these)
+
+- Wiring Search Console, Serper, OpenAI, Gemini (UI still uses the sample company)
+- Stripe / paying for Watch and Fix (those buttons collect emails)
+- Custom domain, firewall, WAF
+- Rotating keys that were pasted in chat (do this after the live link works)
+
 ## Three tiers
 
 | Plan | Price | What it is |
