@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { auth } from "@/auth";
 import { Providers } from "@/components/providers";
+import { recordAccount } from "@/lib/accounts-store";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,14 +27,24 @@ export const metadata: Metadata = {
     "Look at your website every day. We watch Google, ChatGPT, one rival, and visits. Pay to know what is broken. Call us to fix it.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const session = await auth();
+  if (session?.user?.email) {
+    await recordAccount({
+      email: session.user.email,
+      name: session.user.name ?? null,
+      image: session.user.image ?? null,
+      googleId: session.user.googleId ?? null,
+      emailVerified: session.user.googleEmailVerified,
+    });
+  }
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background font-sans text-foreground">
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );

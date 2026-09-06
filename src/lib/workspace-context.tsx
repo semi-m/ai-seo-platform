@@ -10,7 +10,7 @@ import {
 } from "react";
 import { demoWorkspace } from "./demo-provider";
 import { integrations } from "./integrations";
-import { isPlanId, planById, planLimits, type Plan, type PlanId, type PlanLimits } from "./tiers";
+import { planById, planLimits, type Plan, type PlanId, type PlanLimits } from "./tiers";
 import type {
   Competitor,
   Keyword,
@@ -30,6 +30,7 @@ type Overrides = {
   connections?: Record<string, boolean>;
   onboarded?: boolean;
   plan?: PlanId;
+  notifiedPlans?: Array<Exclude<PlanId, "free">>;
 };
 
 type WorkspaceContextValue = {
@@ -58,6 +59,8 @@ type WorkspaceContextValue = {
   setRecStatus: (id: string, status: RecStatus) => void;
   toggleConnection: (id: string) => void;
   setPlan: (id: PlanId) => void;
+  notifiedPlans: Array<Exclude<PlanId, "free">>;
+  markNotified: (id: Exclude<PlanId, "free">) => void;
   resetDemo: () => void;
 };
 
@@ -105,9 +108,10 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     [overrides],
   );
 
-  const planId: PlanId = isPlanId(overrides.plan ?? "") ? overrides.plan! : "free";
+  const planId: PlanId = "free";
   const limits = planLimits[planId];
   const plan = planById[planId];
+  const notifiedPlans = overrides.notifiedPlans ?? [];
 
   const keywordPool = limits.rankedKeywordsOnly
     ? rankedKeywords(workspace.keywords)
@@ -129,15 +133,54 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   ).length;
   const usingDemo = requiredConnected < required.length;
 
+  useEffect(() => {
+    if (!hydrated) return;
+    let cancelled = false;
+    fetch("/api/account")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((account: {
+        brand?: string | null;
+        domain?: string | null;
+        products?: string[];
+        onboarded?: boolean;
+        notifiedPlans?: Array<Exclude<PlanId, "free">>;
+      } | null) => {
+        if (cancelled || !account) return;
+        setOverrides((prev) => ({
+          ...prev,
+          brand: account.brand || prev.brand,
+          domain: account.domain || prev.domain,
+          products: account.products?.length ? account.products : prev.products,
+          onboarded: account.onboarded || prev.onboarded,
+          notifiedPlans: account.notifiedPlans?.length
+            ? account.notifiedPlans
+            : prev.notifiedPlans,
+        }));
+      })
+      .catch(() => {
+        /* stay on local copy */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated]);
+
   const completeOnboarding = useCallback(
     (input: { brand: string; domain: string; products: string[] }) => {
+      const domain = input.domain.replace(/^https?:\/\//, "").replace(/\/$/, "");
+      const products = input.products.filter(Boolean);
       setOverrides((prev) => ({
         ...prev,
         brand: input.brand,
-        domain: input.domain.replace(/^https?:\/\//, "").replace(/\/$/, ""),
-        products: input.products.filter(Boolean),
+        domain,
+        products,
         onboarded: true,
       }));
+      void fetch("/api/account", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brand: input.brand, domain, products }),
+      });
     },
     [],
   );
@@ -160,7 +203,16 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setPlan = useCallback((id: PlanId) => {
-    setOverrides((prev) => ({ ...prev, plan: id }));
+    if (id !== "free") return;
+    setOverrides((prev) => ({ ...prev, plan: "free" }));
+  }, []);
+
+  const markNotified = useCallback((id: Exclude<PlanId, "free">) => {
+    setOverrides((prev) => {
+      const current = prev.notifiedPlans ?? [];
+      if (current.includes(id)) return prev;
+      return { ...prev, notifiedPlans: [...current, id] };
+    });
   }, []);
 
   const resetDemo = useCallback(() => {
@@ -191,6 +243,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       setRecStatus,
       toggleConnection,
       setPlan,
+      notifiedPlans,
+      markNotified,
       resetDemo,
     }),
     [
@@ -214,6 +268,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       setRecStatus,
       toggleConnection,
       setPlan,
+      notifiedPlans,
+      markNotified,
       resetDemo,
     ],
   );

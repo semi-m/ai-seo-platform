@@ -12,7 +12,16 @@ A day-to-day look at how you show up on Google and in ChatGPT. The weekly write-
 | **Watch** | Monthly | Daily monitoring + a **weekly progress document**. **5 prompts.** What you should fix (diagnosis, evidence, impact). **Not how to fix it.** |
 | **Fix** | Talk to us | You use the same tool. We get on a call and show you **how** — pages, citations, schema. |
 
-Switch tiers in the app under **Plans** to preview the gates (sample company: Northline).
+Look is the live plan. Watch and Fix collect emails (“Notify me”) until those products open.
+
+## Deploy (the always-on link)
+
+1. Import [semi-m/ai-seo-platform](https://github.com/semi-m/ai-seo-platform) on [Vercel](https://vercel.com/new) (Hobby is free).
+2. Add env vars from `.env.example`. Minimum for login: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `AUTH_SECRET`, `AUTH_URL` (your `https://….vercel.app`), `FOUNDER_EMAIL`, `DATABASE_URL`.
+3. In Google Cloud → APIs & Services → Credentials → your OAuth client, add Authorized redirect URIs:
+   - `http://127.0.0.1:4731/api/auth/callback/google`
+   - `https://YOUR-APP.vercel.app/api/auth/callback/google`
+4. Deploy. The `*.vercel.app` URL is the app. GitHub is only the code.
 
 ## Run
 
@@ -26,6 +35,12 @@ npm run dev
 ```
 
 Open [http://127.0.0.1:4731](http://127.0.0.1:4731)
+
+Then sign in with Google. Each login is written to the SQLite database (`data/lyra.db`): email, name, photo, Google id, last seen, company, and Watch/Fix notify emails. Open **Signups** when you are signed in as `semi@revido.io`.
+
+`npm run db:push` creates the tables. The database file is gitignored.
+
+On Vercel the SQLite file does not last. For the live URL, create a free [Neon](https://neon.tech) Postgres and put that `DATABASE_URL` in Vercel — then tell me and we switch the schema from SQLite to Postgres.
 
 ## Which APIs (and which not)
 

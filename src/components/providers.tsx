@@ -1,12 +1,22 @@
 "use client";
 
+import type { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { WorkspaceProvider } from "@/lib/workspace-context";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+  session,
+}: {
+  children: React.ReactNode;
+  session: Session | null;
+}) {
   return (
-    <TooltipProvider delay={200}>
-      <WorkspaceProvider>{children}</WorkspaceProvider>
-    </TooltipProvider>
+    <SessionProvider session={session}>
+      <TooltipProvider delay={200}>
+        <WorkspaceProvider>{children}</WorkspaceProvider>
+      </TooltipProvider>
+    </SessionProvider>
   );
 }

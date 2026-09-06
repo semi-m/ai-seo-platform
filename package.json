@@ -7,16 +7,21 @@
   },
   "scripts": {
     "dev": "next dev --port 4731 --hostname 127.0.0.1",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start --hostname 0.0.0.0",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "@prisma/client": "^6.19.3",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.5",
     "lucide-react": "^1.41.0",
     "next": "16.3.4",
+    "next-auth": "^5.0.0-beta.32",
+    "prisma": "^6.19.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "shadcn": "^4.21.0",

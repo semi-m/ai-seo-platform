@@ -21,7 +21,7 @@ export function UpgradeGate({
       <h2 className="mt-2 font-heading text-2xl tracking-tight">{title}</h2>
       <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">{children}</p>
       <Link href="/plans" className="mt-5 inline-block text-sm underline underline-offset-4">
-        See plans
+        Get a note when {plan.name} opens
       </Link>
     </section>
   );

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Compass } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +11,12 @@ import { useWorkspace } from "@/lib/workspace-context";
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { completeOnboarding, workspace } = useWorkspace();
+  const { data } = useSession();
+  const { completeOnboarding, onboarded, workspace } = useWorkspace();
   const [step, setStep] = useState(1);
-  const [brand, setBrand] = useState(workspace.brand);
-  const [domain, setDomain] = useState(workspace.domain);
-  const [products, setProducts] = useState(workspace.products.join(", "));
+  const [brand, setBrand] = useState(onboarded ? workspace.brand : "");
+  const [domain, setDomain] = useState(onboarded ? workspace.domain : "");
+  const [products, setProducts] = useState(onboarded ? workspace.products.join(", ") : "");
   const [error, setError] = useState<string | null>(null);
 
   function finish() {
@@ -52,9 +54,9 @@ export default function OnboardingPage() {
             Whose site are we watching?
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Name and website. You land on Look: searches you already show up
-            for, one rival, three questions people ask ChatGPT. We watch. We do
-            not tell you what to fix.
+            Signed in as {data?.user?.email ?? "your Google account"}. Name the
+            company we should watch. You land on Look. We do not tell you what
+            to fix.
           </p>
           <div className="mt-8 space-y-5">
             <div className="space-y-1.5">

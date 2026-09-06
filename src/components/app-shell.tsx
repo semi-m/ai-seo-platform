@@ -15,10 +15,13 @@ import {
   Tags,
   Users,
 } from "lucide-react";
+import { AccountMenu } from "@/components/account-menu";
 import { NotificationBell } from "@/components/notification-bell";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { isFounderEmail } from "@/lib/accounts-store";
 import { useWorkspace } from "@/lib/workspace-context";
+import { useSession } from "next-auth/react";
 
 const daily = [
   { href: "/overview", label: "Today", icon: Sun },
@@ -33,7 +36,13 @@ const paid = [
   { href: "/recommendations", label: "To fix", icon: ListChecks },
 ];
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({
+  onNavigate,
+  founder,
+}: {
+  onNavigate?: () => void;
+  founder?: boolean;
+}) {
   const pathname = usePathname();
   const { limits } = useWorkspace();
   const linkClass = (href: string) => {
@@ -91,6 +100,16 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           <Tags className="size-4" />
           Plans
         </Link>
+        {founder ? (
+          <Link
+            href="/subscribers"
+            onClick={onNavigate}
+            className={linkClass("/subscribers")}
+          >
+            <Tags className="size-4" />
+            Signups
+          </Link>
+        ) : null}
       </div>
     </nav>
   );
@@ -122,12 +141,14 @@ function BrandBlock() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const { workspace, plan, limits } = useWorkspace();
+  const { data } = useSession();
+  const founder = isFounderEmail(data?.user?.email);
 
   return (
     <div className="min-h-dvh">
       <aside className="glass fixed top-3 bottom-3 left-3 z-20 hidden w-60 flex-col rounded-[1.75rem] px-2 py-5 sm:flex">
         <BrandBlock />
-        <NavLinks />
+        <NavLinks founder={founder} />
         <p className="mt-auto px-3 pt-6 text-[11px] leading-relaxed text-muted-foreground">
           {limits.howTo
             ? "We show you how to fix it."
@@ -161,6 +182,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               {plan.name}
             </Link>
             <NotificationBell />
+            <AccountMenu founder={founder} />
           </div>
         </header>
         <main className="mx-auto w-full max-w-5xl px-4 pb-12 pt-5 sm:px-6 sm:pt-6">
@@ -171,7 +193,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="glass h-full rounded-[1.75rem] px-3 pt-6">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <BrandBlock />
-              <NavLinks onNavigate={() => setOpen(false)} />
+              <NavLinks founder={founder} onNavigate={() => setOpen(false)} />
             </div>
           </SheetContent>
         </Sheet>
